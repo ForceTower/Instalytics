@@ -9,6 +9,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -17,3 +18,4 @@ dependencyResolutionManagement {
 rootProject.name = "Instalytics"
 include(":android-app")
 include(":shared")
+include(":core:base")

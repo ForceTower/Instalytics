@@ -1,8 +1,12 @@
+import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -28,7 +32,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            api(projects.core.base)
+            implementation(libs.kotlininject.runtime)
+            implementation(libs.forcetower.toolkit.logdog)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -45,5 +51,40 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+ksp {
+    arg("me.tatarka.inject.generateCompanionExtensions", "true")
+}
+
+addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
+
+
+fun Project.addKspDependencyForAllTargets(dependencyNotation: Any) = addKspDependencyForAllTargets("", dependencyNotation)
+fun Project.addKspTestDependencyForAllTargets(dependencyNotation: Any) = addKspDependencyForAllTargets("Test", dependencyNotation)
+
+private fun Project.addKspDependencyForAllTargets(
+    configurationNameSuffix: String,
+    dependencyNotation: Any,
+) {
+    val kmpExtension = extensions.getByType<KotlinMultiplatformExtension>()
+    dependencies {
+        kmpExtension.targets
+            .asSequence()
+            .filter { target ->
+                // Don't add KSP for common target, only final platforms
+                target.platformType != KotlinPlatformType.common
+            }
+            .forEach { target ->
+                println("Adding to target.. ${target.targetName}")
+                add(
+                    "ksp${
+                        target.targetName
+                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                    }$configurationNameSuffix",
+                    dependencyNotation,
+                )
+            }
     }
 }

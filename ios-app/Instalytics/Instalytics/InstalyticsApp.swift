@@ -13,7 +13,7 @@ struct InstalyticsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
-        InstalyticsDependencies.init()
+        print(IosApplicationComponent.companion.create(someValue: 3).thing.run())
     }
     
     var body: some Scene {
