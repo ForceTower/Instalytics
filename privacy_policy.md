@@ -34,14 +34,22 @@ Your data is processed solely by Instalytics and is never transferred to third p
 
 ---
 
-### 4. **Data Storage and Security**
+### 4. **Content Liability Disclaimer**
+
+Instalytics does not create, control, or influence the content posted on Instagram. By using our app, you acknowledge that:
+* All content displayed in the app originates from your Instagram account or publicly accessible Instagram data.
+* Instalytics is not responsible for the legality, accuracy, or appropriateness of any content retrieved from Instagram.
+* Any illegal, infringing, or harmful content posted to Instagram is the sole responsibility of the Instagram account owner.
+* If requested or required by law, we may remove access to data associated with specific accounts or content.
+
+### 5. **Data Storage and Security**
 Your information is securely stored and protected using industry-standard encryption and access controls.
 
 We retain your data only as long as it's necessary to provide our services or as required by law.
 
 ---
 
-### 5. **Your Rights**
+### 6. **Your Rights**
 You may request to:
 - View the data we’ve collected about you
 - Delete your stored data
@@ -50,7 +58,7 @@ You may request to:
 To exercise your rights or ask any questions, contact us at: me@forcetowet.dev
 ---
 
-### 6. **Changes to This Policy**
+### 7. **Changes to This Policy**
 We may update this Privacy Policy from time to time. If we make significant changes, we’ll notify you through the app or via email.
 
 ---
