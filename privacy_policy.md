@@ -1,6 +1,4 @@
----
-
-**Privacy Policy for Instalytics**
+## **Privacy Policy for Instalytics**
 
 Effective Date: April 18th, 2025
 
