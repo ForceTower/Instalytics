@@ -33,8 +33,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.core.base)
+            api(libs.forcetower.toolkit.logdog)
             implementation(libs.kotlininject.runtime)
-            implementation(libs.forcetower.toolkit.logdog)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

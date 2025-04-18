@@ -12,10 +12,6 @@ import InstalyticsKit
 struct InstalyticsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    init() {
-        print(IosApplicationComponent.companion.create(someValue: 3).thing.run())
-    }
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
