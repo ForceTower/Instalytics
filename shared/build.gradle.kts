@@ -19,14 +19,18 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "InstalyticsKit"
-            isStatic = true
+
+    val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
+    val architecture = System.getProperty("os.arch").lowercase()
+    if (isMacOS && architecture == "aarch64") {
+        listOf(
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach {
+            it.binaries.framework {
+                baseName = "InstalyticsKit"
+                isStatic = true
+            }
         }
     }
 
