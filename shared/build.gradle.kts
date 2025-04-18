@@ -9,6 +9,13 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+// Function to check if we're on macOS with Apple Silicon (ARM)
+fun isMacOsArm(): Boolean {
+    val osName = System.getProperty("os.name").lowercase()
+    val osArch = System.getProperty("os.arch").lowercase()
+    return osName.contains("mac") && (osArch.contains("aarch64") || osArch.contains("arm64"))
+}
+
 kotlin {
     androidTarget {
         compilations.all {
@@ -20,9 +27,8 @@ kotlin {
         }
     }
 
-    val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
-    val architecture = System.getProperty("os.arch").lowercase()
-    if (isMacOS && architecture == "aarch64") {
+    // Only include iOS targets when on macOS with ARM architecture
+    if (isMacOsArm()) {
         listOf(
             iosArm64(),
             iosSimulatorArm64()
