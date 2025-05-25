@@ -32,6 +32,8 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Window
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,9 +70,6 @@ val rawPosts = listOf(
     "https://images.unsplash.com/photo-1748100377329-429f657842de?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 )
 
-@Serializable
-object ProfileScreen
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(
@@ -89,14 +88,12 @@ fun Profile(
     ) {
         TopAppBar(
             title = {
-                Column {
-                    Text(
-                        text = stringResource(R.string.home_profile),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                }
+                Text(
+                    text = stringResource(R.string.home_profile),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
             }
         )
 
@@ -240,7 +237,7 @@ fun ProfileContentTypes() {
             .width(IntrinsicSize.Max)
     ) {
         Icon(
-            painter = painterResource(R.drawable.round_window_24),
+            imageVector = Icons.Default.Window,
             contentDescription = null
         )
         Text(
@@ -292,7 +289,7 @@ fun SmallProfileStat(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
-internal fun FacebookLoginScreenPreview() {
+internal fun ProfilePreview() {
     InstalyticsTheme {
         Scaffold { _ ->
             Profile()

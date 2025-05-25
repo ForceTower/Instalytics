@@ -20,18 +20,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.navigation.profile.Profile
-import dev.forcetower.instalytics.android.ui.navigation.profile.ProfileScreen
+import dev.forcetower.instalytics.android.ui.navigation.insights.Insights
+import dev.forcetower.instalytics.android.ui.navigation.search.Search
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed interface HomeScreen {
-    object Profile : HomeScreen
-    object Search : HomeScreen
-    object Insight : HomeScreen
+    @Serializable object Profile : HomeScreen
+    @Serializable object Search : HomeScreen
+    @Serializable object Insight : HomeScreen
 }
 
 data class NavigationItem<T : Any>(
@@ -65,28 +69,35 @@ fun InstalyticsHome() {
     InstalyticsTheme {
         val navController = rememberNavController()
         Scaffold(
-            bottomBar = { HomeBottomBar() },
+            bottomBar = { HomeBottomBar(navController) },
             modifier = Modifier
                 .fillMaxSize(),
         ) { paddingValues ->
-            NavHost(navController = navController, startDestination = ProfileScreen) {
-                composable<ProfileScreen> { Profile(paddingValues) }
+            NavHost(navController = navController, startDestination = HomeScreen.Insight) {
+                composable<HomeScreen.Insight> { Insights(paddingValues) }
+                composable<HomeScreen.Search> { Search(paddingValues) }
+                composable<HomeScreen.Profile> { Profile(paddingValues) }
             }
         }
     }
 }
 
 @Composable
-fun HomeBottomBar() {
+fun HomeBottomBar(
+    navController: NavController
+) {
     val selectedNavigationIndex = rememberSaveable {
-        mutableIntStateOf(2)
+        mutableIntStateOf(0)
     }
 
     NavigationBar {
         navItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = index == selectedNavigationIndex.intValue,
-                onClick = { selectedNavigationIndex.intValue = index },
+                onClick = {
+                    selectedNavigationIndex.intValue = index
+                    navController.navigate(item.route)
+                },
                 icon = { Icon(imageVector = item.icon, contentDescription = stringResource(item.title)) },
                 label = { Text(text = stringResource(id = item.title)) },
             )
