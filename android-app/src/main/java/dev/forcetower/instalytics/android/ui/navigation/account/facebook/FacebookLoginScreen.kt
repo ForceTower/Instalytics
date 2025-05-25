@@ -51,11 +51,10 @@ internal fun FacebookLoginScreen(viewModel: FacebookLoginViewModel) {
     val loading = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.event.collect {
+        viewModel.events.collect {
             when (it) {
                 FacebookLoginEvent.LoginSuccess -> {
                     loading.value = false
-//                    activity?.startActivity()
                 }
 
                 FacebookLoginEvent.LoginCanceled -> {

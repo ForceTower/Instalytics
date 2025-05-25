@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 
 abstract class EventViewModel<E : Any> : ViewModel() {
     private val channel = Channel<E>()
-    val event: Flow<E> = channel.receiveAsFlow()
+    val events: Flow<E> = channel.receiveAsFlow()
 
     @MainThread
     fun sendEvent(producer: () -> E) {

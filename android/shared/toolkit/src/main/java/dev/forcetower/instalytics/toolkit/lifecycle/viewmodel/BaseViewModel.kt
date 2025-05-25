@@ -13,7 +13,7 @@ abstract class BaseViewModel<S : Any, E : Any>(initialState: S) : ViewModel() {
         private set
 
     private val channel = Channel<E>()
-    val event: Flow<E> = channel.receiveAsFlow()
+    val events: Flow<E> = channel.receiveAsFlow()
 
     private val _state = MutableStateFlow(initialState)
     val state: StateFlow<S> = _state
