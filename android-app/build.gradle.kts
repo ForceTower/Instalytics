@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.facebook.sdk)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation (libs.charts.compose)
 
     debugImplementation(libs.compose.ui.tooling)
 }
