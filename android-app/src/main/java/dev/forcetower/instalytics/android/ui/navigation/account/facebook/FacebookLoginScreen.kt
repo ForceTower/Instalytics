@@ -1,5 +1,6 @@
 package dev.forcetower.instalytics.android.ui.navigation.account.facebook
 
+import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.navigation.InstalyticsNavigation
+import dev.forcetower.instalytics.android.ui.navigation.home.HomeActivity
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
 import kotlinx.serialization.Serializable
 
@@ -55,6 +57,9 @@ internal fun FacebookLoginScreen(viewModel: FacebookLoginViewModel) {
             when (it) {
                 FacebookLoginEvent.LoginSuccess -> {
                     loading.value = false
+                    requireNotNull(activity)
+                    activity.startActivity(Intent(activity, HomeActivity::class.java))
+                    activity.finish()
                 }
 
                 FacebookLoginEvent.LoginCanceled -> {
