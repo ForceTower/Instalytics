@@ -25,7 +25,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,11 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.facebook.login.LoginManager
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.navigation.InstalyticsNavigation
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
-import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -54,7 +51,7 @@ internal fun FacebookLoginScreen(viewModel: FacebookLoginViewModel) {
     val loading = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.dispatcher.collect {
+        viewModel.event.collect {
             when (it) {
                 FacebookLoginEvent.LoginSuccess -> {
                     loading.value = false
