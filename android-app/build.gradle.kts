@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.text.googleFonts)
 
     implementation(libs.facebook.sdk)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     debugImplementation(libs.compose.ui.tooling)
 }

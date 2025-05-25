@@ -1,5 +1,6 @@
-package dev.forcetower.instalytics.android.ui.navigation.account.facebook
+package dev.forcetower.instalytics.android.ui.navigation.login.facebook
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
@@ -153,6 +154,7 @@ internal fun FacebookLoginScreen(viewModel: FacebookLoginViewModel) {
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
 internal fun FacebookLoginScreenPreview() {

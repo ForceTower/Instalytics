@@ -1,4 +1,4 @@
-package dev.forcetower.instalytics.android.ui.navigation.account.facebook
+package dev.forcetower.instalytics.android.ui.navigation.login.facebook
 
 import android.app.Activity
 import androidx.activity.result.ActivityResultRegistryOwner

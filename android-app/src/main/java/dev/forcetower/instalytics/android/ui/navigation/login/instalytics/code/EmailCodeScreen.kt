@@ -1,4 +1,4 @@
-package dev.forcetower.instalytics.android.ui.navigation.account.instalytics.code
+package dev.forcetower.instalytics.android.ui.navigation.login.instalytics.code
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image

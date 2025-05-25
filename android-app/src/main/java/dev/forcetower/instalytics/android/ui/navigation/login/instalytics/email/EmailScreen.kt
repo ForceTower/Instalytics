@@ -1,4 +1,4 @@
-package dev.forcetower.instalytics.android.ui.navigation.account.instalytics.email
+package dev.forcetower.instalytics.android.ui.navigation.login.instalytics.email
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -41,7 +41,7 @@ import androidx.navigation.NavController
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.components.text.InstalyticsTextField
 import dev.forcetower.instalytics.android.ui.navigation.InstalyticsNavigation
-import dev.forcetower.instalytics.android.ui.navigation.account.instalytics.code.EmailCode
+import dev.forcetower.instalytics.android.ui.navigation.login.instalytics.code.EmailCode
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
 import kotlinx.serialization.Serializable
 
