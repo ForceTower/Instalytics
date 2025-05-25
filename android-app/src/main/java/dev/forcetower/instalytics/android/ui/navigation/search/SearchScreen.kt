@@ -22,7 +22,7 @@ fun Search(paddingValues: PaddingValues) {
         TopAppBar(
             title = {
                 Text(
-                    text = stringResource(R.string.home_insight),
+                    text = stringResource(R.string.home_search),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()

@@ -78,7 +78,7 @@ fun AccountInsight(
         ) {
             AccountInsightBox("Followers", "1.2k", 10, modifier = Modifier.weight(1f))
             Spacer(Modifier.size(8.dp))
-            AccountInsightBox("Accounts Reached by this account", "1.1k", 12, modifier = Modifier.weight(1f))
+            AccountInsightBox("Accounts Reached", "1.1k", 12, modifier = Modifier.weight(1f))
         }
 
         Row(
