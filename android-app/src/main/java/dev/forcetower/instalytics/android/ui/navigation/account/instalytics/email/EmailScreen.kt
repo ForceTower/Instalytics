@@ -40,13 +40,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.components.text.InstalyticsTextField
-import dev.forcetower.instalytics.android.ui.navigation.ILNavigation
+import dev.forcetower.instalytics.android.ui.navigation.InstalyticsNavigation
 import dev.forcetower.instalytics.android.ui.navigation.account.instalytics.code.EmailCode
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
 import kotlinx.serialization.Serializable
 
 @Serializable
-object InstalyticsLogin : ILNavigation
+object InstalyticsLogin : InstalyticsNavigation
 
 @Composable
 fun EmailScreen(

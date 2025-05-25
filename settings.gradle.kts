@@ -19,3 +19,4 @@ rootProject.name = "Instalytics"
 include(":android-app")
 include(":shared")
 include(":core:base")
+include(":android:shared:toolkit")

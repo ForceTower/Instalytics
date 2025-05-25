@@ -63,6 +63,8 @@ android {
 
 dependencies {
     implementation(projects.shared)
+    implementation(projects.android.shared.toolkit)
+    implementation(libs.androidx.appcompat)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)

@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import dev.forcetower.instalytics.android.ui.navigation.ILNavigation
+import dev.forcetower.instalytics.android.ui.navigation.InstalyticsNavigation
 import dev.forcetower.instalytics.android.ui.navigation.account.instalytics.email.InstalyticsLogin
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
 import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 
 @Serializable
-object Startup : ILNavigation
+object Startup : InstalyticsNavigation
 
 @Composable
 fun StartupScreen(navController: NavController) {
