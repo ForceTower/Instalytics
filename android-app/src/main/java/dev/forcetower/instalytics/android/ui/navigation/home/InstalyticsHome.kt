@@ -1,16 +1,7 @@
 package dev.forcetower.instalytics.android.ui.navigation.home
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.togetherWith
-import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -61,7 +52,6 @@ val navItems = listOf(
 @Composable
 fun InstalyticsHome() {
     InstalyticsTheme {
-        val driveEasing = CubicBezierEasing(0.2f, 0f, 0f, 1f)
         val navController = rememberNavController()
         val selectedNavigationIndex = rememberSaveable {
             mutableIntStateOf(0)

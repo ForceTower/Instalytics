@@ -29,9 +29,9 @@ fun InstalyticsTheme(
         certificates = R.array.com_google_android_gms_fonts_certs
     )
 
-    val arabicFontName = GoogleFont("Be Arabic Pro")
-    val arabicFont = FontFamily(
-        Font(googleFont = arabicFontName, fontProvider = provider)
+    val vietnam = GoogleFont("Be Vietnam Pro")
+    val vietnamFont = FontFamily(
+        Font(googleFont = vietnam, fontProvider = provider)
     )
 
     val sfFont = FontFamily(
@@ -61,21 +61,21 @@ fun InstalyticsTheme(
     }
     val defaultTypography = Typography()
     val typography = Typography(
-        displayLarge = defaultTypography.displayLarge.copy(fontFamily = sfFont),
-        displayMedium = defaultTypography.displayMedium.copy(fontFamily = sfFont),
-        displaySmall = defaultTypography.displaySmall.copy(fontFamily = sfFont),
-        headlineLarge = defaultTypography.headlineLarge.copy(fontFamily = sfFont),
-        headlineMedium = defaultTypography.headlineMedium.copy(fontFamily = sfFont),
-        headlineSmall = defaultTypography.headlineSmall.copy(fontFamily = sfFont),
-        titleLarge = defaultTypography.titleLarge.copy(fontFamily = sfFont),
-        titleMedium = defaultTypography.titleMedium.copy(fontFamily = sfFont),
-        titleSmall = defaultTypography.titleSmall.copy(fontFamily = sfFont),
-        bodyLarge = defaultTypography.bodyLarge.copy(fontFamily = sfFont),
-        bodyMedium = defaultTypography.bodyMedium.copy(fontFamily = sfFont),
-        bodySmall = defaultTypography.bodySmall.copy(fontFamily = sfFont),
-        labelLarge = defaultTypography.labelLarge.copy(fontFamily = sfFont),
-        labelMedium = defaultTypography.labelMedium.copy(fontFamily = sfFont),
-        labelSmall = defaultTypography.labelSmall.copy(fontFamily = sfFont),
+        displayLarge = defaultTypography.displayLarge.copy(fontFamily = vietnamFont),
+        displayMedium = defaultTypography.displayMedium.copy(fontFamily = vietnamFont),
+        displaySmall = defaultTypography.displaySmall.copy(fontFamily = vietnamFont),
+        headlineLarge = defaultTypography.headlineLarge.copy(fontFamily = vietnamFont),
+        headlineMedium = defaultTypography.headlineMedium.copy(fontFamily = vietnamFont),
+        headlineSmall = defaultTypography.headlineSmall.copy(fontFamily = vietnamFont),
+        titleLarge = defaultTypography.titleLarge.copy(fontFamily = vietnamFont),
+        titleMedium = defaultTypography.titleMedium.copy(fontFamily = vietnamFont),
+        titleSmall = defaultTypography.titleSmall.copy(fontFamily = vietnamFont),
+        bodyLarge = defaultTypography.bodyLarge.copy(fontFamily = vietnamFont),
+        bodyMedium = defaultTypography.bodyMedium.copy(fontFamily = vietnamFont),
+        bodySmall = defaultTypography.bodySmall.copy(fontFamily = vietnamFont),
+        labelLarge = defaultTypography.labelLarge.copy(fontFamily = vietnamFont),
+        labelMedium = defaultTypography.labelMedium.copy(fontFamily = vietnamFont),
+        labelSmall = defaultTypography.labelSmall.copy(fontFamily = vietnamFont),
     )
     val shapes = Shapes(
         extraSmall = RoundedCornerShape(12.dp),

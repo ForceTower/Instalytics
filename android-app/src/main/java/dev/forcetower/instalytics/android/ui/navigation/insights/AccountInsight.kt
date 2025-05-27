@@ -96,7 +96,7 @@ fun AccountInsight(
 
         Text(
             "Followers",
-            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Light),
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Normal),
             modifier = Modifier
                 .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
                 .padding(horizontal = 16.dp)
@@ -216,7 +216,7 @@ private fun AccountInsightBox(
     ) {
         Text(
             title,
-            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Thin)
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Normal)
         )
         Text(
             metric,
@@ -224,7 +224,7 @@ private fun AccountInsightBox(
         )
         Text(
             "${if (percentage > 0) "+" else ""}$percentage%",
-            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Thin),
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Normal),
             color = if (percentage > 0) Color(0xFF088738) else MaterialTheme.colorScheme.error
         )
     }
