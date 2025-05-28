@@ -10,7 +10,7 @@ import dev.forcetower.instalytics.di.create
 import dev.forcetower.kmm.toolkit.logdog.LogdogLogger
 
 class InstalyticsApplication : Application() {
-    val component by lazy { AndroidApplicationComponent.create() }
+    val component by lazy { AndroidApplicationComponent.create(this) }
 
     override fun onCreate() {
         super.onCreate()

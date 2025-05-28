@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 // Function to check if we're on macOS with Apple Silicon (ARM)
@@ -35,6 +36,17 @@ kotlin {
             it.binaries.framework {
                 baseName = "InstalyticsKit"
                 isStatic = true
+                linkerOpts.add("-lsqlite3")
+            }
+        }
+    }
+
+    targets.configureEach {
+        compilations.configureEach {
+            compileTaskProvider.configure{
+                compilerOptions {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
             }
         }
     }
@@ -43,6 +55,8 @@ kotlin {
         commonMain.dependencies {
             api(projects.core.base)
             api(libs.forcetower.toolkit.logdog)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
             implementation(libs.kotlininject.runtime)
         }
         commonTest.dependencies {
@@ -67,7 +81,12 @@ ksp {
     arg("me.tatarka.inject.generateCompanionExtensions", "true")
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
+addKspDependencyForAllTargets(libs.androidx.room.compiler)
 
 
 fun Project.addKspDependencyForAllTargets(dependencyNotation: Any) = addKspDependencyForAllTargets("", dependencyNotation)

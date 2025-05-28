@@ -76,7 +76,8 @@ dependencies {
     implementation(libs.facebook.sdk)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-    implementation (libs.charts.compose)
+    implementation(libs.charts.compose)
+    implementation(libs.androidx.room.runtime)
 
     debugImplementation(libs.compose.ui.tooling)
 }
