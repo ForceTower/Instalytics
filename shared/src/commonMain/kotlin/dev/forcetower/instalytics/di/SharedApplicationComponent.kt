@@ -7,6 +7,7 @@ import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuild
 import dev.forcetower.instalytics.domain.OtherTest
 import dev.forcetower.instalytics.domain.ThingDomain
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import me.tatarka.inject.annotations.Provides
 
 internal interface SharedApplicationComponent {
