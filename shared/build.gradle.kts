@@ -1,59 +1,28 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
+import dev.forcetower.instalytics.gradle.addKspDependencyForAllTargets
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    id("dev.forcetower.instalytics.android.library")
+    id("dev.forcetower.instalytics.multiplatform")
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
 }
 
-// Function to check if we're on macOS with Apple Silicon (ARM)
-fun isMacOsArm(): Boolean {
-    val osName = System.getProperty("os.name").lowercase()
-    val osArch = System.getProperty("os.arch").lowercase()
-    return osName.contains("mac") && (osArch.contains("aarch64") || osArch.contains("arm64"))
-}
-
 kotlin {
-    androidTarget {
-        compilations.all {
-            compileTaskProvider.configure {
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.JVM_17)
-                }
-            }
-        }
-    }
+    targets.withType<KotlinNativeTarget>().configureEach {
+        binaries.framework {
+            isStatic = true
+            baseName = "InstalyticsKit"
 
-    // Only include iOS targets when on macOS with ARM architecture
-    if (isMacOsArm()) {
-        listOf(
-            iosArm64(),
-            iosSimulatorArm64()
-        ).forEach {
-            it.binaries.framework {
-                baseName = "InstalyticsKit"
-                isStatic = true
-                linkerOpts.add("-lsqlite3")
-            }
-        }
-    }
-
-    targets.configureEach {
-        compilations.configureEach {
-            compileTaskProvider.configure{
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
-            }
+//            export(projects.core.analytics)
         }
     }
 
     sourceSets {
         commonMain.dependencies {
             api(projects.core.base)
+            api(projects.data.db)
+            api(projects.data.instagram.profile)
             api(libs.forcetower.toolkit.logdog)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
@@ -67,14 +36,6 @@ kotlin {
 
 android {
     namespace = "dev.forcetower.instalytics"
-    compileSdk = 35
-    defaultConfig {
-        minSdk = 28
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
 
 ksp {
@@ -87,32 +48,3 @@ room {
 
 addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
 addKspDependencyForAllTargets(libs.androidx.room.compiler)
-
-
-fun Project.addKspDependencyForAllTargets(dependencyNotation: Any) = addKspDependencyForAllTargets("", dependencyNotation)
-fun Project.addKspTestDependencyForAllTargets(dependencyNotation: Any) = addKspDependencyForAllTargets("Test", dependencyNotation)
-
-private fun Project.addKspDependencyForAllTargets(
-    configurationNameSuffix: String,
-    dependencyNotation: Any,
-) {
-    val kmpExtension = extensions.getByType<KotlinMultiplatformExtension>()
-    dependencies {
-        kmpExtension.targets
-            .asSequence()
-            .filter { target ->
-                // Don't add KSP for common target, only final platforms
-                target.platformType != KotlinPlatformType.common
-            }
-            .forEach { target ->
-                println("Adding to target.. ${target.targetName}")
-                add(
-                    "ksp${
-                        target.targetName
-                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-                    }$configurationNameSuffix",
-                    dependencyNotation,
-                )
-            }
-    }
-}

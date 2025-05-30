@@ -10,4 +10,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization) apply false
     alias(libs.plugins.android.kotlin.multiplatform.library) apply false
     alias(libs.plugins.androidx.room) apply false
+    alias(libs.plugins.spotless) apply false
+    alias(libs.plugins.cacheFixPlugin) apply false
+    alias(libs.plugins.ktorfit) apply false
 }
