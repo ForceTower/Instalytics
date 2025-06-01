@@ -11,10 +11,12 @@ import InstalyticsKit
 @main
 struct InstalyticsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @ObservedObject var router = RootRouter()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environmentObject(router)
         }
     }
 }
