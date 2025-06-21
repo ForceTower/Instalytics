@@ -2,8 +2,38 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e1340c6bb2cf7591362a03e8886f6ba4",
+    "identityHash": "6e452c7f0f13b1f55edf93ab130d56fc",
     "entities": [
+      {
+        "tableName": "FacebookAccessToken",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `accessToken` TEXT NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accessToken",
+            "columnName": "accessToken",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
       {
         "tableName": "InstagramAccount",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `username` TEXT NOT NULL, `profilePictureUrl` TEXT, PRIMARY KEY(`id`))",
@@ -42,7 +72,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e1340c6bb2cf7591362a03e8886f6ba4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e452c7f0f13b1f55edf93ab130d56fc')"
     ]
   }
 }

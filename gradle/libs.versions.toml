@@ -38,7 +38,7 @@ licensee = "1.12.0"
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 charts-compose = { module = "io.github.ehsannarmani:compose-charts", version.ref = "composeCharts" }
-forcetower-toolkit-logdog = { module = "dev.forcetower.kmm.toolkit:logdog", version.prefer = "0.0.1" }
+forcetower-toolkit-logdog = { module = "dev.forcetower.kmm.toolkit:logdog", version.prefer = "0.0.1-LOCAL" }
 kotlininject-runtime = { module = "me.tatarka.inject:kotlin-inject-runtime-kmp", version.ref = "kotlininject" }
 kotlininject-compiler-ksp = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlininject" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

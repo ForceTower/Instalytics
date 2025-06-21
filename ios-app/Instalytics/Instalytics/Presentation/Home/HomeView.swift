@@ -20,10 +20,17 @@ struct HomeView: View {
     
     var body: some View {
         TabView(selection: selectionBinding) {
-            ProfileView()
-                .tabItem {
-                    Label("Profile", systemImage: "person.crop.circle")
-                }.tag(HomeTabSelection.profile)
+            NavigationStack {
+                InsightsView()
+            }.tabItem {
+                Label("Insights", systemImage: "star.circle.fill")
+            }.tag(HomeTabSelection.insights)
+            
+            NavigationStack {
+                ProfileView()
+            }.tabItem {
+                Label("Profile", systemImage: "person.crop.circle")
+            }.tag(HomeTabSelection.profile)
         }
     }
 }
