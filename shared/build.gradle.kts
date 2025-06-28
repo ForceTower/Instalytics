@@ -23,7 +23,6 @@ kotlin {
             api(projects.core.base)
             api(projects.data.db)
             api(projects.data.instagram.profile)
-            api(libs.forcetower.toolkit.logdog)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
             implementation(libs.kotlininject.runtime)

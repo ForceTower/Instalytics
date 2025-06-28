@@ -2,6 +2,7 @@ package dev.forcetower.instalytics.android.ui.navigation.login.facebook
 
 import android.app.Activity
 import androidx.activity.result.ActivityResultRegistryOwner
+import co.touchlab.kermit.Logger
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -9,7 +10,6 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import dev.forcetower.instalytics.toolkit.lifecycle.viewmodel.EventViewModel
-import dev.forcetower.kmm.toolkit.logdog.logdog
 
 internal sealed interface FacebookLoginEvent {
     data object LoginSuccess : FacebookLoginEvent
@@ -57,7 +57,7 @@ internal class FacebookLoginViewModel : EventViewModel<FacebookLoginEvent>() {
     }
 
     private fun onFacebookLoginSuccess(accessToken: AccessToken) {
-        logdog { "Access token ${accessToken.token}" }
+        Logger.d { "Access token ${accessToken.token}" }
         sendEvent { FacebookLoginEvent.LoginSuccess }
     }
 

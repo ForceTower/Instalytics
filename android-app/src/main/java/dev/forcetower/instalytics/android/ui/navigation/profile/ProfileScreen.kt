@@ -56,11 +56,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
-import dev.forcetower.kmm.toolkit.logdog.logdog
-import kotlinx.serialization.Serializable
 
 val rawPosts = listOf(
     "https://images.unsplash.com/photo-1747582300720-9c71ee7f7fc2?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -114,7 +113,7 @@ fun Profile(
             }
             items(rawPosts) { post ->
                 ProfilePost(post) {
-                    logdog { "Clicked a post! $post" }
+                    Logger.d { "Clicked a post! $post" }
                 }
             }
         }

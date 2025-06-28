@@ -5,9 +5,10 @@ import android.os.Build
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
+import co.touchlab.kermit.LogcatWriter
+import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.di.AndroidApplicationComponent
 import dev.forcetower.instalytics.di.create
-import dev.forcetower.kmm.toolkit.logdog.LogdogLogger
 
 class InstalyticsApplication : Application() {
     val component by lazy { AndroidApplicationComponent.create(this) }
@@ -15,7 +16,6 @@ class InstalyticsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         setupStrictMode()
-        LogdogLogger.install(AndroidLogdogLogger())
     }
 
     private fun setupStrictMode() {
