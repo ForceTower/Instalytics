@@ -16,30 +16,3 @@ internal data class InstagramProfile(
     @SerialName("media_count") val mediaCount: Int,
     @SerialName("media") val media: MediaContainer
 )
-
-@Serializable
-internal data class MediaContainer(
-    @SerialName("data") val data: List<MediaItem>,
-    @SerialName("paging") val paging: Paging? = null
-)
-
-@Serializable
-internal data class MediaItem(
-    @SerialName("id") val id: String,
-    @SerialName("media_type") val mediaType: String,
-    @SerialName("media_url") val mediaUrl: String,
-    @SerialName("thumbnail_url") val thumbnailUrl: String? = null,
-    @SerialName("timestamp") val timestamp: String
-)
-
-@Serializable
-internal data class Paging(
-    @SerialName("cursors") val cursors: Cursors? = null,
-    @SerialName("next") val next: String? = null
-)
-
-@Serializable
-internal data class Cursors(
-    @SerialName("before") val before: String? = null,
-    @SerialName("after") val after: String? = null
-)

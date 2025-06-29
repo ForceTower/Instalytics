@@ -50,6 +50,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -61,11 +62,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
 import dev.forcetower.instalytics.di.toInstagramString
 import dev.forcetower.instalytics.domain.model.InstagramAccountUI
+import dev.forcetower.instalytics.domain.model.InstagramPostUI
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
+import kotlin.uuid.Uuid
 
 val rawPosts = listOf(
     "https://images.unsplash.com/photo-1747582300720-9c71ee7f7fc2?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -81,10 +86,21 @@ fun Profile(
     viewModel: ProfileViewModel = koinViewModel(),
 ) {
     val account by viewModel.me.collectAsStateWithLifecycle(InstagramAccountUI())
+    val posts by viewModel.posts.collectAsStateWithLifecycle(emptyList())
 
     ProfileUI(
         paddingValues,
-        account
+        account,
+        posts,
+        onPostClicked = { post ->
+            viewModel.onPostClicked(post)
+        },
+        onOpenProfile = {
+            viewModel.onOpenProfile()
+        },
+        onShareProfile = {
+            viewModel.onShareProfile()
+        }
     )
 
     LaunchedEffect(Unit) {
@@ -97,6 +113,10 @@ fun Profile(
 fun ProfileUI(
     paddingValues: PaddingValues = PaddingValues(),
     account: InstagramAccountUI,
+    posts: List<InstagramPostUI>,
+    onPostClicked: (post: InstagramPostUI) -> Unit = {},
+    onOpenProfile: () -> Unit = {},
+    onShareProfile: () -> Unit = {},
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val paddings = PaddingValues(
@@ -129,15 +149,19 @@ fun ProfileUI(
         ) {
             item(span = { GridItemSpan(2) }) {
                 Column {
-                    ProfileHeader(account = account)
+                    ProfileHeader(
+                        account = account,
+                        onOpenProfile = onOpenProfile,
+                        onShareProfile = onShareProfile
+                    )
                     ProfileStats(account = account)
                     ProfileContentTypes()
                     HorizontalDivider()
                 }
             }
-            items(rawPosts) { post ->
+            items(posts, key = { it.id }) { post ->
                 ProfilePost(post) {
-                    Logger.d { "Clicked a post! $post" }
+                    onPostClicked(post)
                 }
             }
         }
@@ -146,12 +170,15 @@ fun ProfileUI(
 
 @Composable
 fun ProfilePost(
-    post: String,
+    post: InstagramPostUI,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     AsyncImage(
-        model = post,
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(post.imageUrl)
+            .diskCacheKey(post.id)
+            .build(),
         contentScale = ContentScale.Crop,
         contentDescription = null,
         modifier = modifier
@@ -164,7 +191,9 @@ fun ProfilePost(
 
 @Composable
 fun ProfileHeader(
-    account: InstagramAccountUI
+    account: InstagramAccountUI,
+    onOpenProfile: () -> Unit,
+    onShareProfile: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -203,7 +232,7 @@ fun ProfileHeader(
                 .padding(top = 16.dp)
         ) {
             Button(
-                onClick = { },
+                onClick = onOpenProfile,
                 modifier = Modifier
                     .weight(1f),
                 colors = ButtonDefaults.elevatedButtonColors()
@@ -214,7 +243,7 @@ fun ProfileHeader(
             Spacer(Modifier.padding(8.dp))
 
             Button(
-                onClick = { },
+                onClick = onShareProfile,
                 modifier = Modifier
                     .weight(1f)
             ) {
@@ -319,7 +348,15 @@ internal fun ProfilePreview() {
     InstalyticsTheme {
         Scaffold { _ ->
             ProfileUI(
-                account = InstagramAccountUI()
+                account = InstagramAccountUI(),
+                posts = rawPosts.map {
+                    InstagramPostUI(
+                        id = UUID.randomUUID().toString(),
+                        imageUrl = it,
+                        likesCount = 0,
+                        commentsCount = 0
+                    )
+                }
             )
         }
     }
