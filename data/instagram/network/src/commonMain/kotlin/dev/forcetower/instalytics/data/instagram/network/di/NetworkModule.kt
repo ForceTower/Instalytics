@@ -1,12 +1,15 @@
 package dev.forcetower.instalytics.data.instagram.network.di
 
 import co.touchlab.kermit.Logger
+import dev.forcetower.instalytics.data.instagram.network.cache.CacheModule
+import dev.forcetower.instalytics.data.instagram.network.cache.FileSystemProvider
+import dev.forcetower.instalytics.data.instagram.network.cache.InternalCacheStorage
+import dev.forcetower.instalytics.data.model.entity.FacebookAccessToken
 import dev.forcetower.instalytics.data.storage.database.InstalyticsDB
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.cache.storage.CacheStorage
-import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -17,7 +20,7 @@ import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 object NetworkModule {
-    val module = module {
+    private val module = module {
         single<Json> {
             Json {
                 ignoreUnknownKeys = true
@@ -38,7 +41,12 @@ object NetworkModule {
                     level = LogLevel.ALL
                 }
                 install(HttpCache) {
-
+                    publicStorage(
+                        InternalCacheStorage(
+                            10 * 1024 * 1024, // 10MB
+                            get<FileSystemProvider>()
+                        )
+                    )
                 }
             }
 
@@ -60,4 +68,6 @@ object NetworkModule {
             ktorClient
         }
     }
+
+    val modules = listOf(module, CacheModule.module)
 }

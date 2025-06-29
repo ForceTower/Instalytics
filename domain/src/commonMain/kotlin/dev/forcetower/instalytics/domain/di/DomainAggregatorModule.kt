@@ -7,7 +7,7 @@ import dev.forcetower.instalytics.data.instagram.profile.di.ProfileModule
 internal object DomainAggregatorModule {
     val modules = buildList {
         addAll(DatabaseModule.modules)
-        add(NetworkModule.module)
+        addAll(NetworkModule.modules)
         add(ProfileModule.module)
     }
 }

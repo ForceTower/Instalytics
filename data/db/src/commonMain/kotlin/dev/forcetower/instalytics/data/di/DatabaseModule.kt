@@ -4,6 +4,7 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import dev.forcetower.instalytics.data.storage.database.InstalyticsDB
 import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuilderFactory
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.dsl.module
 
 object DatabaseModule {

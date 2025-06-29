@@ -19,6 +19,8 @@ compose-ui-text-google-fonts = "1.8.3"
 ktor = "3.1.2"
 koin-bom = "4.1.0"
 paging = "3.3.6"
+okio = "3.14.0"
+kache = "2.1.1"
 
 facebook = "18.0.3"
 coreKtx = "1.16.0"
@@ -82,6 +84,8 @@ ktorfit = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "kt
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+kache = { module = "com.mayakapps.kache:file-kache", version.ref = "kache" }
 
 # Build logic dependencies
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }

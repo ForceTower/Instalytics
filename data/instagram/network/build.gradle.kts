@@ -1,5 +1,10 @@
 plugins {
+    id("dev.forcetower.instalytics.android.library")
     id("dev.forcetower.instalytics.multiplatform")
+}
+
+android {
+    namespace = "dev.forcetower.instalytics.data.instagram.network"
 }
 
 kotlin {
@@ -13,6 +18,8 @@ kotlin {
                 implementation(libs.ktor.client.contentnegotiation)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.serialization.json)
+                implementation(libs.okio)
+                implementation(libs.kache)
             }
         }
     }

@@ -16,6 +16,10 @@ try {
     logger.warn("No Local Properties File Found!")
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     namespace = "dev.forcetower.instalytics.android"
     compileSdk = 36
