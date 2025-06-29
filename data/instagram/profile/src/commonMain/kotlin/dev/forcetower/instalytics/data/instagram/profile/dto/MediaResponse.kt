@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class MediaContainer(
-    @SerialName("data") val data: List<MediaItem>,
+    @SerialName("data") val data: List<MediaItem>? = null,
     @SerialName("paging") val paging: Paging? = null
 )
 

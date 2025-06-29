@@ -6,10 +6,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import dev.forcetower.instalytics.data.model.entity.FacebookAccessToken
 import dev.forcetower.instalytics.data.model.entity.InstagramAccount
+import dev.forcetower.instalytics.data.model.entity.InstagramCursor
 import dev.forcetower.instalytics.data.model.entity.InstagramMedia
 import dev.forcetower.instalytics.data.model.entity.InstagramMediaChild
 import dev.forcetower.instalytics.data.storage.database.dao.FacebookAccessTokenDao
 import dev.forcetower.instalytics.data.storage.database.dao.InstagramAccountDao
+import dev.forcetower.instalytics.data.storage.database.dao.InstagramCursorDao
 import dev.forcetower.instalytics.data.storage.database.dao.InstagramMediaChildDao
 import dev.forcetower.instalytics.data.storage.database.dao.InstagramMediaDao
 
@@ -19,11 +21,13 @@ import dev.forcetower.instalytics.data.storage.database.dao.InstagramMediaDao
         InstagramAccount::class,
         InstagramMedia::class,
         InstagramMediaChild::class,
+        InstagramCursor::class
     ],
-    version = 3,
+    version = 4,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4),
     ]
 )
 @ConstructedBy(InstalyticsDatabaseConstructor::class)
@@ -32,4 +36,5 @@ abstract class InstalyticsDB : RoomDatabase() {
     abstract val instagramAccount: InstagramAccountDao
     abstract val instagramMedia: InstagramMediaDao
     abstract val instagramMediaChildren: InstagramMediaChildDao
+    abstract val instagramCursor: InstagramCursorDao
 }

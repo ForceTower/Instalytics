@@ -11,7 +11,7 @@ class ProfileViewModel(
     private val profile: FetchConnectedUserProfileUseCase
 ) : ViewModel() {
     val me = profile.me
-    val posts = profile.posts
+    val post = profile.post
 
     fun fetchProfile() {
         viewModelScope.launch {

@@ -23,7 +23,7 @@ internal interface ProfileService {
     @GET("{id}/media")
     suspend fun media(
         @Path("id") id: String,
-        @Query("fields") fields: String = "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,like_count,comments_count,children{id,media_type,media_url,thumbnail_url},insights.metric(reach,total_interactions,saved)",
+        @Query("fields") fields: String = "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,like_count,comments_count,children{id,media_type,media_url,thumbnail_url}",
         @Query("limit") limit: Int = 20,
         @Query("after") after: String? = null
     ): MediaContainer
@@ -31,6 +31,6 @@ internal interface ProfileService {
     @GET("{id}")
     suspend fun mediaDetails(
         @Path("id") id: String,
-        @Query("fields") fields: String = "id,caption,collaborators,media_type,media_url,permalink,thumbnail_url,timestamp,like_count,comments_count,children{id,media_type,media_url,thumbnail_url},insights.metric(reach,total_interactions,saved)"
+        @Query("fields") fields: String = "id,caption,collaborators,media_type,media_url,permalink,thumbnail_url,timestamp,like_count,comments_count,children{id,media_type,media_url,thumbnail_url}"
     ): MediaItem
 }

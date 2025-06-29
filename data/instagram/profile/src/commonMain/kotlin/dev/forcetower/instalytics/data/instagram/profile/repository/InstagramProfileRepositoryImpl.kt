@@ -1,7 +1,13 @@
 package dev.forcetower.instalytics.data.instagram.profile.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.data.instagram.profile.network.ProfileService
+import dev.forcetower.instalytics.data.instagram.profile.source.PostsMediatorSource
+import dev.forcetower.instalytics.data.model.composite.InstagramMediaWithChildren
 import dev.forcetower.instalytics.data.model.entity.InstagramAccount
 import dev.forcetower.instalytics.data.model.entity.InstagramMedia
 import dev.forcetower.instalytics.data.model.entity.InstagramMediaChild
@@ -10,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
+@OptIn(ExperimentalPagingApi::class)
 internal class InstagramProfileRepositoryImpl(
     private val database: InstalyticsDB,
     private val service: ProfileService
@@ -20,6 +27,16 @@ internal class InstagramProfileRepositoryImpl(
 
     override fun posts(): Flow<List<InstagramMedia>> {
         return database.instagramMedia.mine().map { it.map { el -> el.media } }
+    }
+
+    override fun post(): Flow<PagingData<InstagramMediaWithChildren>> {
+        val pager = Pager(
+            config = PagingConfig(pageSize = 10, initialLoadSize = 10),
+            remoteMediator = PostsMediatorSource(database, service)
+        ) {
+            database.instagramMedia.minePaged()
+        }
+        return pager.flow
     }
 
     override suspend fun fetchMe() {
@@ -49,7 +66,7 @@ internal class InstagramProfileRepositoryImpl(
 
         val medias = instagram.media
             .data
-            .map {
+            ?.map {
                 InstagramMedia(
                     it.id,
                     it.mediaType,
@@ -61,14 +78,14 @@ internal class InstagramProfileRepositoryImpl(
                     it.caption,
                     instagram.id,
                 )
-            }
+            } ?: emptyList()
 
         database.instagramMedia.insertAll(medias)
 
         val children = instagram.media
             .data
-            .filter { it.mediaType === "CAROUSEL_ALBUM" }
-            .map { post ->
+            ?.filter { it.mediaType === "CAROUSEL_ALBUM" }
+            ?.map { post ->
                 post.children?.data?.map {
                     InstagramMediaChild(
                         it.id,
@@ -79,7 +96,7 @@ internal class InstagramProfileRepositoryImpl(
                     )
                 } ?: emptyList()
             }
-            .flatten()
+            ?.flatten() ?: emptyList()
 
         database.instagramMediaChildren.insertAll(children)
     }

@@ -5,20 +5,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class AccountResponse(
-    @SerialName("data")
-    internal val data: List<BasicFacebookAccount>
+    @SerialName("data") val data: List<BasicFacebookAccount>
 )
 
 @Serializable
 internal data class BasicFacebookAccount(
-    @SerialName("instagram_business_account")
-    val businessAccount: BasicIdAccount?,
-    @SerialName("id")
-    val id: String
+    @SerialName("instagram_business_account") val businessAccount: BasicIdAccount?,
+    @SerialName("id") val id: String
 )
 
 @Serializable
 internal data class BasicIdAccount(
-    @SerialName("id")
-    val id: String
+    @SerialName("id") val id: String
 )

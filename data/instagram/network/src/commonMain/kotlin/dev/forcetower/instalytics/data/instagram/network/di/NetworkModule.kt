@@ -1,11 +1,18 @@
 package dev.forcetower.instalytics.data.instagram.network.di
 
+import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.data.storage.database.InstalyticsDB
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpSend
+import io.ktor.client.plugins.cache.HttpCache
+import io.ktor.client.plugins.cache.storage.CacheStorage
+import io.ktor.client.plugins.cache.storage.FileStorage
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.plugin
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.client.plugins.logging.Logger as KtorLogger
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
@@ -21,6 +28,17 @@ object NetworkModule {
             val ktorClient = HttpClient {
                 install(ContentNegotiation) {
                     json(get<Json>())
+                }
+                install(Logging) {
+                    logger = object : KtorLogger {
+                        override fun log(message: String) {
+                            Logger.d { message }
+                        }
+                    }
+                    level = LogLevel.ALL
+                }
+                install(HttpCache) {
+
                 }
             }
 

@@ -1,7 +1,6 @@
 package dev.forcetower.instalytics.android.ui.navigation.profile
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,7 +29,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Window
@@ -52,7 +50,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -60,7 +57,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import co.touchlab.kermit.Logger
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import dev.forcetower.instalytics.android.R
@@ -69,8 +67,6 @@ import dev.forcetower.instalytics.di.toInstagramString
 import dev.forcetower.instalytics.domain.model.InstagramAccountUI
 import dev.forcetower.instalytics.domain.model.InstagramPostUI
 import org.koin.androidx.compose.koinViewModel
-import java.util.UUID
-import kotlin.uuid.Uuid
 
 val rawPosts = listOf(
     "https://images.unsplash.com/photo-1747582300720-9c71ee7f7fc2?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -86,12 +82,13 @@ fun Profile(
     viewModel: ProfileViewModel = koinViewModel(),
 ) {
     val account by viewModel.me.collectAsStateWithLifecycle(InstagramAccountUI())
-    val posts by viewModel.posts.collectAsStateWithLifecycle(emptyList())
 
     ProfileUI(
         paddingValues,
         account,
-        posts,
+        posts = {
+            viewModel.post.collectAsLazyPagingItems()
+        },
         onPostClicked = { post ->
             viewModel.onPostClicked(post)
         },
@@ -113,8 +110,8 @@ fun Profile(
 fun ProfileUI(
     paddingValues: PaddingValues = PaddingValues(),
     account: InstagramAccountUI,
-    posts: List<InstagramPostUI>,
-    onPostClicked: (post: InstagramPostUI) -> Unit = {},
+    posts: @Composable () -> LazyPagingItems<InstagramPostUI>,
+    onPostClicked: (InstagramPostUI) -> Unit = {},
     onOpenProfile: () -> Unit = {},
     onShareProfile: () -> Unit = {},
 ) {
@@ -125,6 +122,9 @@ fun ProfileUI(
         bottom = paddingValues.calculateBottomPadding() + 1.dp,
         top = 1.dp,
     )
+
+    val posts = posts()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -139,7 +139,6 @@ fun ProfileUI(
                 )
             }
         )
-
 
         LazyVerticalGrid(
             modifier = Modifier
@@ -159,7 +158,9 @@ fun ProfileUI(
                     HorizontalDivider()
                 }
             }
-            items(posts, key = { it.id }) { post ->
+
+            items(posts.itemCount, key = { index -> posts[index]?.id ?: index }) { index ->
+                val post = posts[index] ?: return@items
                 ProfilePost(post) {
                     onPostClicked(post)
                 }
@@ -341,23 +342,32 @@ fun SmallProfileStat(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview
-@Composable
-internal fun ProfilePreview() {
-    InstalyticsTheme {
-        Scaffold { _ ->
-            ProfileUI(
-                account = InstagramAccountUI(),
-                posts = rawPosts.map {
-                    InstagramPostUI(
-                        id = UUID.randomUUID().toString(),
-                        imageUrl = it,
-                        likesCount = 0,
-                        commentsCount = 0
-                    )
-                }
-            )
-        }
-    }
-}
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@Preview
+//@Composable
+//internal fun ProfilePreview() {
+//    InstalyticsTheme {
+//        Scaffold { _ ->
+//            ProfileUI(
+//                account = InstagramAccountUI(
+//                    id = "1",
+//                    name = "Stephan Doe",
+//                    username = "stephan_doe",
+//                    profilePictureUrl = "https://images.unsplash.com/photo-1747582300720-9c71ee7f7fc2?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//                    biography = "Things are always happening\nTry making it more fun!",
+//                    mediaCount = 84531,
+//                    followers = 12538,
+//                    follows = 351
+//                ),
+////                posts = rawPosts.map { image ->
+////                    InstagramPostUI(
+////                        id = UUID.randomUUID().toString(),
+////                        imageUrl = image,
+////                        likesCount = 0,
+////                        commentsCount = 0
+////                    )
+////                },
+//            )
+//        }
+//    }
+//}

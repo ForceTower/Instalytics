@@ -12,7 +12,7 @@ object ProfileModule {
         single<ProfileService> {
             Ktorfit.Builder()
                 .httpClient(get<HttpClient>())
-                .baseUrl("https://graph.facebook.com/v22.0/")
+                .baseUrl("https://graph.facebook.com/v23.0/")
                 .build()
                 .create<ProfileService>()
         }

@@ -6,7 +6,10 @@ import dev.forcetower.instalytics.data.model.entity.InstagramAccount
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class InstagramAccountDao : BaseDao<InstagramAccount> {
+interface InstagramAccountDao : BaseDao<InstagramAccount> {
     @Query("SELECT * FROM InstagramAccount WHERE me = 1 LIMIT 1")
-    abstract fun me(): Flow<InstagramAccount?>
+    suspend fun requireMe(): InstagramAccount?
+
+    @Query("SELECT * FROM InstagramAccount WHERE me = 1 LIMIT 1")
+    fun me(): Flow<InstagramAccount?>
 }

@@ -78,6 +78,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.common)
 
     debugImplementation(libs.compose.ui.tooling)
 }

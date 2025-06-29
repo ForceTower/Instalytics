@@ -14,6 +14,7 @@ kotlin {
                 implementation(projects.core.base)
                 implementation(projects.data.model)
                 api(libs.androidx.room.runtime)
+                api(libs.androidx.room.paging)
                 api(libs.androidx.sqlite.bundled)
             }
         }
