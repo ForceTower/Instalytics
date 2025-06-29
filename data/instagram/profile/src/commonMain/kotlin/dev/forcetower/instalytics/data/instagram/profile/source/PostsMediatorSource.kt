@@ -52,8 +52,7 @@ internal class PostsMediatorSource(
             database.instagramCursor.clearTypeOwner("MEDIA", profileId)
         }
 
-        val medias = response
-            .data
+        val medias = response.data
             ?.map {
                 InstagramMedia(
                     it.id,
@@ -70,8 +69,7 @@ internal class PostsMediatorSource(
 
         database.instagramMedia.insertAll(medias)
 
-        val children = response
-            .data
+        val children = response.data
             ?.filter { it.mediaType === "CAROUSEL_ALBUM" }
             ?.map { post ->
                 post.children?.data?.map {

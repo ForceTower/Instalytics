@@ -12,9 +12,7 @@ import InstalyticsKit
 class AppDelegate : NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        LogsKt.install(logger: DebugLogger())
-        IosApplicationComponent.companion.create()
-        
+        startKoin()
         return true
     }
 }

@@ -19,5 +19,6 @@ class FetchConnectedUserProfileUseCase(private val repository: InstagramProfileR
     val post: Flow<PagingData<InstagramPostUI>>
         get() = repository.post().map { value -> value.map { el -> el.media.toDomain() } }
 
-    suspend fun me() = repository.fetchMe()
+    @Throws(exceptionClasses = [IllegalStateException::class])
+    suspend fun fetchMe() = repository.fetchMe()
 }

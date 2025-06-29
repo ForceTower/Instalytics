@@ -9,4 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface InstagramMediaChildDao : BaseDao<InstagramMediaChild> {
     @Query("SELECT * FROM InstagramMediaChild WHERE parentId = :mediaId")
     fun children(mediaId: String): Flow<List<InstagramMediaChild>>
+
+    @Query("DELETE FROM InstagramMediaChild")
+    suspend fun destroy()
 }

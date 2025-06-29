@@ -21,4 +21,7 @@ interface InstagramMediaDao : BaseDao<InstagramMedia> {
         "SELECT * FROM InstagramMedia WHERE owner = (SELECT id FROM InstagramAccount WHERE me = 1 LIMIT 1) ORDER BY timestamp DESC"
     )
     fun minePaged(): PagingSource<Int, InstagramMediaWithChildren>
+
+    @Query("DELETE FROM InstagramMedia")
+    suspend fun destroy()
 }

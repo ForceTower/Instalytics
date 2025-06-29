@@ -2,6 +2,7 @@ package dev.forcetower.instalytics.android.ui.navigation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.domain.model.InstagramPostUI
 import dev.forcetower.instalytics.domain.usecase.FetchConnectedUserProfileUseCase
@@ -11,12 +12,12 @@ class ProfileViewModel(
     private val profile: FetchConnectedUserProfileUseCase
 ) : ViewModel() {
     val me = profile.me
-    val post = profile.post
+    val post = profile.post.cachedIn(viewModelScope)
 
     fun fetchProfile() {
         viewModelScope.launch {
             runCatching {
-                profile.me()
+                profile.fetchMe()
             }.onFailure {
                 Logger.e(it) { "Error fetching profile" }
             }

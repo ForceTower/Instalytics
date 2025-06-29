@@ -5,6 +5,7 @@
 //  Created by João Paulo Santos Sena on 30/05/25.
 //
 
+import InstalyticsKit
 import SwiftUI
 import SDWebImageSwiftUI
 
@@ -32,41 +33,50 @@ let images = [
 ]
 
 struct ProfileView: View {
+    @ObservedObject var vm: ProfileViewModel = .init()
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
-                ProfileHeader()
+                ProfileHeader(account: vm.account)
                 Spacer(minLength: 8)
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 1), count: 3), spacing: 1) {
-                    ForEach(images.indices, id: \.self) { index in
-                        GeometryReader { geometry in
-                            let size = geometry.size.width
-                            let string = images[index]
-                            WebImage(url: URL(string: string)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .allowedDynamicRange(.constrainedHigh)
-                                    .frame(width: size, height: size)
-                                    .clipped()
-                            } placeholder: {
-                                Rectangle().foregroundColor(.gray)
+                    ForEach(vm.photos.indices, id: \.self) { index in
+                        if let item = vm.getElement(index: Int32(index)) {
+                            let string = item.imageUrl
+                            GeometryReader { geometry in
+                                let size = geometry.size.width
+                                WebImage(url: URL(string: string)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .allowedDynamicRange(.constrainedHigh)
+                                        .frame(width: size, height: size)
+                                        .clipped()
+                                } placeholder: {
+                                    Rectangle().foregroundColor(.gray)
+                                }
                             }
+                            .aspectRatio(1, contentMode: .fit)
                         }
-                        .aspectRatio(1, contentMode: .fit)
                     }
                 }
             }
         }
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(Text("Profile"))
+        .onAppear {
+            vm.onAppear()
+        }
     }
 }
 
 struct ProfileHeader: View {
+    let account: InstagramAccountUI?
+    
     var body: some View {
         VStack(alignment: .leading) {
-            WebImage(url: URL(string: "https://images.unsplash.com/photo-1606335192038-f5a05f761b3a?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=dillon-kydd-J6MK67MIs0I-unsplash.jpg&w=640")) { image in
+            WebImage(url: URL(string: account?.profilePictureUrl ?? "https://images.unsplash.com/photo-1606335192038-f5a05f761b3a?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=dillon-kydd-J6MK67MIs0I-unsplash.jpg&w=640")) { image in
                 image
                     .resizable()
                     .scaledToFill()
@@ -79,12 +89,10 @@ struct ProfileHeader: View {
             .clipShape(.circle)
             .padding(.trailing, 8)
             
-            Text("Sophia Carter")
+            Text(account?.name ?? "...")
                 .font(.title2)
-            Text("Digital Creator")
-                .font(.body)
-                .foregroundStyle(.secondary)
-            Text("Travel enthusiast | Sharing my adventures")
+            
+            Text(account?.biography ?? "...")
                 .font(.body)
                 .foregroundStyle(.secondary)
             
@@ -105,9 +113,9 @@ struct ProfileHeader: View {
             }
             
             HStack {
-                SmallProfileStat(text: "1.2k", description: "Posts")
-                SmallProfileStat(text: "8.5k", description: "Following")
-                SmallProfileStat(text: "1.9M", description: "Followers")
+                SmallProfileStat(text: account?.mediaCount.toInstagramString() ?? "", description: "Posts")
+                SmallProfileStat(text: account?.follows.toInstagramString() ?? "", description: "Following")
+                SmallProfileStat(text: account?.followers.toInstagramString() ?? "", description: "Followers")
             }
         }
         .padding(.horizontal)
@@ -116,7 +124,7 @@ struct ProfileHeader: View {
 }
 
 struct SmallProfileStat: View {
-    let text: AttributedString
+    let text: String
     let description: AttributedString
     
     var body: some View {

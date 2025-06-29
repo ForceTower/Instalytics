@@ -31,12 +31,11 @@ object NetworkModule {
                     json(get<Json>())
                 }
                 install(Logging) {
-                    logger =
-                        object : KtorLogger {
-                            override fun log(message: String) {
-                                Logger.d { message }
-                            }
+                    logger = object : KtorLogger {
+                        override fun log(message: String) {
+                            Logger.d { message }
                         }
+                    }
                     level = LogLevel.ALL
                 }
                 install(HttpCache) {

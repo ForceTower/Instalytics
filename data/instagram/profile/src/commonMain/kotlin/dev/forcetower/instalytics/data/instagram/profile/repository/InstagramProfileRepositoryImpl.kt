@@ -62,40 +62,40 @@ internal class InstagramProfileRepositoryImpl(
             )
         )
 
-        val medias = instagram.media
-            .data
-            ?.map {
-                InstagramMedia(
-                    it.id,
-                    it.mediaType,
-                    it.mediaUrl,
-                    it.thumbnailUrl,
-                    it.timestamp,
-                    it.likeCount,
-                    it.commentsCount,
-                    it.caption,
-                    instagram.id,
-                )
-            } ?: emptyList()
-
-        database.instagramMedia.insertAll(medias)
-
-        val children = instagram.media
-            .data
-            ?.filter { it.mediaType === "CAROUSEL_ALBUM" }
-            ?.map { post ->
-                post.children?.data?.map {
-                    InstagramMediaChild(
-                        it.id,
-                        it.mediaType,
-                        it.mediaUrl,
-                        it.thumbnailUrl,
-                        post.id
-                    )
-                } ?: emptyList()
-            }
-            ?.flatten() ?: emptyList()
-
-        database.instagramMediaChildren.insertAll(children)
+//        val medias = instagram.media
+//            .data
+//            ?.map {
+//                InstagramMedia(
+//                    it.id,
+//                    it.mediaType,
+//                    it.mediaUrl,
+//                    it.thumbnailUrl,
+//                    it.timestamp,
+//                    it.likeCount,
+//                    it.commentsCount,
+//                    it.caption,
+//                    instagram.id,
+//                )
+//            } ?: emptyList()
+//
+//        database.instagramMedia.insertAll(medias)
+//
+//        val children = instagram.media
+//            .data
+//            ?.filter { it.mediaType === "CAROUSEL_ALBUM" }
+//            ?.map { post ->
+//                post.children?.data?.map {
+//                    InstagramMediaChild(
+//                        it.id,
+//                        it.mediaType,
+//                        it.mediaUrl,
+//                        it.thumbnailUrl,
+//                        post.id
+//                    )
+//                } ?: emptyList()
+//            }
+//            ?.flatten() ?: emptyList()
+//
+//        database.instagramMediaChildren.insertAll(children)
     }
 }
