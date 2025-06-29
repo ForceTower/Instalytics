@@ -2,7 +2,6 @@ package dev.forcetower.instalytics.data.storage.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import dev.forcetower.instalytics.data.model.entity.InstagramMedia
 import dev.forcetower.instalytics.data.model.entity.InstagramMediaChild
 import kotlinx.coroutines.flow.Flow
 

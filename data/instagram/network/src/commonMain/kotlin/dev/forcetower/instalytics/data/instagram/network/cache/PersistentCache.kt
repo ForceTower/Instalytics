@@ -24,14 +24,11 @@ internal class PersistentCache(
     private val maxSize: Long,
     private val dispatcher: CoroutineDispatcher
 ) : CacheStorage {
-
-    private suspend fun getOkioFileCache(): OkioFileKache {
-        return OkioFileKache(
-            directory = directory,
-            maxSize = maxSize
-        ) {
-            fileSystem = this@PersistentCache.fileSystem
-        }
+    private suspend fun getOkioFileCache(): OkioFileKache = OkioFileKache(
+        directory = directory,
+        maxSize = maxSize
+    ) {
+        fileSystem = this@PersistentCache.fileSystem
     }
 
     override suspend fun store(url: Url, data: CachedResponseData) = withContext(dispatcher) {
@@ -58,11 +55,8 @@ internal class PersistentCache(
         return data ?: emptySet()
     }
 
-    private suspend fun OkioFileKache.write(
-        key: String,
-        caches: List<CachedResponseData>
-    ): Path? {
-        return put(key) { cachePath ->
+    private suspend fun OkioFileKache.write(key: String, caches: List<CachedResponseData>): Path? =
+        put(key) { cachePath ->
             fileSystem.sink(cachePath).buffer().use { bufferedSink ->
                 bufferedSink.writeInt(caches.size)
                 val sortedCaches = caches.sortedByDescending { it.expires.timestamp }.toSet()
@@ -72,12 +66,9 @@ internal class PersistentCache(
             }
             true
         }
-    }
 
-    private suspend fun OkioFileKache.read(
-        key: String
-    ): Set<CachedResponseData>? {
-        return getIfAvailable(key)?.let { path ->
+    private suspend fun OkioFileKache.read(key: String): Set<CachedResponseData>? =
+        getIfAvailable(key)?.let { path ->
             fileSystem.read(path) {
                 val requestsCount = this.readInt()
                 val caches = mutableSetOf<CachedResponseData>()
@@ -87,7 +78,6 @@ internal class PersistentCache(
                 caches
             }
         }
-    }
 
     private fun writeCache(bufferedSink: BufferedSink, cache: CachedResponseData) {
         bufferedSink.writeUtf8(cache.url.toString() + "\n")

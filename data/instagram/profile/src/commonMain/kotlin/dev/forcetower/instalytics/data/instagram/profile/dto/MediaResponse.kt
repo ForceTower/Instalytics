@@ -28,7 +28,7 @@ internal data class MediaItemChild(
     @SerialName("id") val id: String,
     @SerialName("media_type") val mediaType: String,
     @SerialName("media_url") val mediaUrl: String,
-    @SerialName("thumbnail_url") val thumbnailUrl: String? = null,
+    @SerialName("thumbnail_url") val thumbnailUrl: String? = null
 )
 
 @Serializable
@@ -42,9 +42,7 @@ internal data class MediaInsight(
 )
 
 @Serializable
-internal data class InsightValue(
-    @SerialName("value") val value: Int
-)
+internal data class InsightValue(@SerialName("value") val value: Int)
 
 @Serializable
 internal data class Paging(

@@ -24,7 +24,8 @@ internal class InMemoryCache : CacheStorage {
         }
     }
 
-    override suspend fun findAll(url: Url): Set<CachedResponseData> {
-        return store.getOrElse(key = url, defaultValue = { emptySet() })
-    }
+    override suspend fun findAll(url: Url): Set<CachedResponseData> =
+        store.getOrElse(key = url, defaultValue = {
+            emptySet()
+        })
 }

@@ -5,9 +5,10 @@ import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuild
 import org.koin.dsl.module
 
 object JvmDatabaseModule {
-    val module = module {
-        single<InstalyticsDatabaseBuilderFactory> {
-            JvmInstalyticsDatabaseBuilderFactory()
+    val module =
+        module {
+            single<InstalyticsDatabaseBuilderFactory> {
+                JvmInstalyticsDatabaseBuilderFactory()
+            }
         }
-    }
 }

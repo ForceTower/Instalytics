@@ -8,7 +8,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface InstagramProfileRepository {
     fun me(): Flow<InstagramAccount>
+
     fun posts(): Flow<List<InstagramMedia>>
+
     fun post(): Flow<PagingData<InstagramMediaWithChildren>>
+
     suspend fun fetchMe()
 }

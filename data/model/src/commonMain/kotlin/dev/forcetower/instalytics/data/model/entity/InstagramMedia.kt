@@ -7,7 +7,11 @@ import androidx.room.PrimaryKey
 
 @Entity(
     foreignKeys = [
-        ForeignKey(entity = InstagramAccount::class, parentColumns = ["id"], childColumns = ["owner"])
+        ForeignKey(
+            entity = InstagramAccount::class,
+            parentColumns = ["id"],
+            childColumns = ["owner"]
+        )
     ],
     indices = [
         Index("owner", unique = false)

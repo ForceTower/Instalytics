@@ -6,9 +6,10 @@ import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuild
 import org.koin.dsl.module
 
 object AndroidDatabaseModule {
-    val module = module {
-        single<InstalyticsDatabaseBuilderFactory> {
-            AndroidInstalyticsDatabaseBuilderFactory(get<Context>())
+    val module =
+        module {
+            single<InstalyticsDatabaseBuilderFactory> {
+                AndroidInstalyticsDatabaseBuilderFactory(get<Context>())
+            }
         }
-    }
 }

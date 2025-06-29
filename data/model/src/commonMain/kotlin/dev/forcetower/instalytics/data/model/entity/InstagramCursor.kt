@@ -8,7 +8,7 @@ import androidx.room.Index
     indices = [
         Index("id", unique = false),
         Index("type", unique = false),
-        Index("owner", unique = false),
+        Index("owner", unique = false)
     ]
 )
 data class InstagramCursor(

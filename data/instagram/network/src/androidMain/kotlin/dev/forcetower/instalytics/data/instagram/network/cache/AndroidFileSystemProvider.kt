@@ -5,9 +5,7 @@ import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 
-internal class AndroidFileSystemProvider(
-    private val context: Context
-): FileSystemProvider {
+internal class AndroidFileSystemProvider(private val context: Context) : FileSystemProvider {
     override val fileSystem: FileSystem
         get() = FileSystem.SYSTEM
     override val cacheDirectoryPath: Path?

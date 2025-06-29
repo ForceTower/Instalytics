@@ -33,13 +33,14 @@ internal class DarwinFileSystemProvider : FileSystemProvider {
     private fun getDirUrl(directory: NSSearchPathDirectory, create: Boolean = false): NSURL? {
         memScoped {
             val error = alloc<ObjCObjectVar<NSError?>>()
-            return manager.URLForDirectory(
-                directory,
-                NSUserDomainMask,
-                null,
-                create,
-                error.ptr
-            )?.standardizedURL
+            return manager
+                .URLForDirectory(
+                    directory,
+                    NSUserDomainMask,
+                    null,
+                    create,
+                    error.ptr
+                )?.standardizedURL
         }
     }
 }

@@ -8,21 +8,23 @@ import kotlinx.coroutines.IO
 import org.koin.dsl.module
 
 object DatabaseModule {
-    private val module = module {
-        single<InstalyticsDB>(createdAtStart = true) {
-            get<InstalyticsDatabaseBuilderFactory>()
-                .create()
-                .fallbackToDestructiveMigrationOnDowngrade(true)
-                .setDriver(BundledSQLiteDriver())
-                .setQueryCoroutineContext(Dispatchers.IO)
-                .build()
+    private val module =
+        module {
+            single<InstalyticsDB>(createdAtStart = true) {
+                get<InstalyticsDatabaseBuilderFactory>()
+                    .create()
+                    .fallbackToDestructiveMigrationOnDowngrade(true)
+                    .setDriver(BundledSQLiteDriver())
+                    .setQueryCoroutineContext(Dispatchers.IO)
+                    .build()
+            }
         }
-    }
 
     private val additional = DatabasePlatformComponent.module()
 
-    val modules = listOf(
-        module,
-        additional
-    )
+    val modules =
+        listOf(
+            module,
+            additional
+        )
 }

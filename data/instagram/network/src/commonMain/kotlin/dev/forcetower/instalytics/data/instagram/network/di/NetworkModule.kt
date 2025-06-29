@@ -4,18 +4,16 @@ import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.data.instagram.network.cache.CacheModule
 import dev.forcetower.instalytics.data.instagram.network.cache.FileSystemProvider
 import dev.forcetower.instalytics.data.instagram.network.cache.InternalCacheStorage
-import dev.forcetower.instalytics.data.model.entity.FacebookAccessToken
 import dev.forcetower.instalytics.data.storage.database.InstalyticsDB
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.cache.HttpCache
-import io.ktor.client.plugins.cache.storage.CacheStorage
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger as KtorLogger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.plugin
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.client.plugins.logging.Logger as KtorLogger
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
@@ -33,11 +31,12 @@ object NetworkModule {
                     json(get<Json>())
                 }
                 install(Logging) {
-                    logger = object : KtorLogger {
-                        override fun log(message: String) {
-                            Logger.d { message }
+                    logger =
+                        object : KtorLogger {
+                            override fun log(message: String) {
+                                Logger.d { message }
+                            }
                         }
-                    }
                     level = LogLevel.ALL
                 }
                 install(HttpCache) {

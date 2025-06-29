@@ -44,5 +44,5 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-//addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
+// addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
 addKspDependencyForAllTargets(libs.androidx.room.compiler)

@@ -17,10 +17,7 @@ internal class PostsMediatorSource(
     private val network: ProfileService,
     private val profileId: String? = null
 ) : RemoteMediator<Int, InstagramMediaWithChildren>() {
-
-    override suspend fun initialize(): InitializeAction {
-        return InitializeAction.LAUNCH_INITIAL_REFRESH
-    }
+    override suspend fun initialize(): InitializeAction = InitializeAction.LAUNCH_INITIAL_REFRESH
 
     override suspend fun load(
         loadType: LoadType,
@@ -40,7 +37,8 @@ internal class PostsMediatorSource(
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
 
-                database.instagramCursor.query(lastItem.media.id, "MEDIA", profileId)?.after ?: return MediatorResult.Success(endOfPaginationReached = true)
+                database.instagramCursor.query(lastItem.media.id, "MEDIA", profileId)?.after
+                    ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
         }
 
@@ -66,7 +64,7 @@ internal class PostsMediatorSource(
                     it.likeCount,
                     it.commentsCount,
                     it.caption,
-                    profileId,
+                    profileId
                 )
             } ?: emptyList()
 
@@ -87,7 +85,6 @@ internal class PostsMediatorSource(
                 } ?: emptyList()
             }
             ?.flatten() ?: emptyList()
-
 
         val after = response.paging?.cursors?.after
         val before = response.paging?.cursors?.before

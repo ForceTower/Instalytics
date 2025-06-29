@@ -16,9 +16,7 @@ internal class InternalCacheStorage(
     private val persistentCache: CacheStorage? = null,
     private val inMemoryCache: CacheStorage
 ) : CacheStorage {
-
     companion object Companion {
-
         private const val TAG = "InternalCacheStorage"
 
         internal fun createPersistentCache(
@@ -29,13 +27,17 @@ internal class InternalCacheStorage(
         ): PersistentCache? {
             if (directoryPath == null) return null
             return PersistentCache(
-                fileSystem, directoryPath, maxSize, dispatcher
+                fileSystem,
+                directoryPath,
+                maxSize,
+                dispatcher
             )
         }
     }
 
     constructor(maxSize: Long, provider: FileSystemProvider) : this(
-        persistentCache = createPersistentCache(
+        persistentCache =
+        createPersistentCache(
             fileSystem = provider.fileSystem,
             directoryPath = provider.cacheDirectoryPath,
             maxSize = maxSize,
@@ -45,7 +47,8 @@ internal class InternalCacheStorage(
     )
 
     constructor(directoryPath: String, maxSize: Long) : this(
-        persistentCache = createPersistentCache(
+        persistentCache =
+        createPersistentCache(
             fileSystem = FileSystem.SYSTEM,
             directoryPath = directoryPath.toPath(),
             maxSize = maxSize,
@@ -68,30 +71,26 @@ internal class InternalCacheStorage(
         }
     }
 
-    override suspend fun find(url: Url, varyKeys: Map<String, String>): CachedResponseData? {
-        return try {
-            if (persistentCache != null) {
-                persistentCache.find(url, varyKeys)
-            } else {
-                logInMemoryUsage("error creating persistent cache.")
-                inMemoryCache.find(url, varyKeys)
-            }
-        } catch (exception: Exception) {
-            logInMemoryUsage(exception.message ?: "error finding response from persistence storage")
+    override suspend fun find(url: Url, varyKeys: Map<String, String>): CachedResponseData? = try {
+        if (persistentCache != null) {
+            persistentCache.find(url, varyKeys)
+        } else {
+            logInMemoryUsage("error creating persistent cache.")
             inMemoryCache.find(url, varyKeys)
         }
+    } catch (exception: Exception) {
+        logInMemoryUsage(exception.message ?: "error finding response from persistence storage")
+        inMemoryCache.find(url, varyKeys)
     }
 
-    override suspend fun findAll(url: Url): Set<CachedResponseData> {
-        return try {
-            persistentCache?.findAll(url) ?: kotlin.run {
-                logInMemoryUsage("error creating persistent cache.")
-                inMemoryCache.findAll(url)
-            }
-        } catch (exception: Exception) {
-            logInMemoryUsage(exception.message ?: "error finding response from persistence storage")
+    override suspend fun findAll(url: Url): Set<CachedResponseData> = try {
+        persistentCache?.findAll(url) ?: kotlin.run {
+            logInMemoryUsage("error creating persistent cache.")
             inMemoryCache.findAll(url)
         }
+    } catch (exception: Exception) {
+        logInMemoryUsage(exception.message ?: "error finding response from persistence storage")
+        inMemoryCache.findAll(url)
     }
 
     private fun logInMemoryUsage(message: String) {

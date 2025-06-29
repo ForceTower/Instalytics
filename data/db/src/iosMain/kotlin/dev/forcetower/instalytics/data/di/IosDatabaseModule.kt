@@ -5,9 +5,10 @@ import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuild
 import org.koin.dsl.module
 
 object IosDatabaseModule {
-    val module = module {
-        single<InstalyticsDatabaseBuilderFactory> {
-            DarwinInstalyticsDatabaseBuilderFactory()
+    val module =
+        module {
+            single<InstalyticsDatabaseBuilderFactory> {
+                DarwinInstalyticsDatabaseBuilderFactory()
+            }
         }
-    }
 }

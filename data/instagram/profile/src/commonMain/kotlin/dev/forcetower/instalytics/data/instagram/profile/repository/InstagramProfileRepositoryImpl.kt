@@ -21,12 +21,10 @@ internal class InstagramProfileRepositoryImpl(
     private val database: InstalyticsDB,
     private val service: ProfileService
 ) : InstagramProfileRepository {
-    override fun me(): Flow<InstagramAccount> {
-        return database.instagramAccount.me().filterNotNull()
-    }
+    override fun me(): Flow<InstagramAccount> = database.instagramAccount.me().filterNotNull()
 
-    override fun posts(): Flow<List<InstagramMedia>> {
-        return database.instagramMedia.mine().map { it.map { el -> el.media } }
+    override fun posts(): Flow<List<InstagramMedia>> = database.instagramMedia.mine().map {
+        it.map { el -> el.media }
     }
 
     override fun post(): Flow<PagingData<InstagramMediaWithChildren>> {

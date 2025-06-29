@@ -7,11 +7,10 @@ import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuild
 import java.io.File
 
 internal class JvmInstalyticsDatabaseBuilderFactory : InstalyticsDatabaseBuilderFactory {
-    override fun create(): RoomDatabase.Builder<InstalyticsDB> {
-        return Room.databaseBuilder<InstalyticsDB>(
-            name = databaseFile.absolutePath,
+    override fun create(): RoomDatabase.Builder<InstalyticsDB> =
+        Room.databaseBuilder<InstalyticsDB>(
+            name = databaseFile.absolutePath
         )
-    }
 }
 
 private val databaseFile: File

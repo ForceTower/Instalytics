@@ -8,5 +8,5 @@ data class InstagramAccountUI(
     val biography: String? = null,
     val followers: Int = 0,
     val follows: Int = 0,
-    val mediaCount: Int = 0,
+    val mediaCount: Int = 0
 )
