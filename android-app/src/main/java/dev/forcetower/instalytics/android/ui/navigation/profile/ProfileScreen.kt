@@ -44,6 +44,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,10 +58,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
 import dev.forcetower.instalytics.android.R
 import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
+import dev.forcetower.instalytics.di.toInstagramString
+import dev.forcetower.instalytics.domain.model.InstagramAccountUI
+import org.koin.androidx.compose.koinViewModel
 
 val rawPosts = listOf(
     "https://images.unsplash.com/photo-1747582300720-9c71ee7f7fc2?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -69,10 +75,28 @@ val rawPosts = listOf(
     "https://images.unsplash.com/photo-1748100377329-429f657842de?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(
-    paddingValues: PaddingValues = PaddingValues()
+    paddingValues: PaddingValues = PaddingValues(),
+    viewModel: ProfileViewModel = koinViewModel(),
+) {
+    val account by viewModel.me.collectAsStateWithLifecycle(InstagramAccountUI())
+
+    ProfileUI(
+        paddingValues,
+        account
+    )
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchProfile()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProfileUI(
+    paddingValues: PaddingValues = PaddingValues(),
+    account: InstagramAccountUI,
 ) {
     val layoutDirection = LocalLayoutDirection.current
     val paddings = PaddingValues(
@@ -105,8 +129,8 @@ fun Profile(
         ) {
             item(span = { GridItemSpan(2) }) {
                 Column {
-                    ProfileHeader()
-                    ProfileStats()
+                    ProfileHeader(account = account)
+                    ProfileStats(account = account)
                     ProfileContentTypes()
                     HorizontalDivider()
                 }
@@ -139,39 +163,40 @@ fun ProfilePost(
 }
 
 @Composable
-fun ProfileHeader() {
+fun ProfileHeader(
+    account: InstagramAccountUI
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
     ) {
-        Image(
-            painter = painterResource(R.drawable.delete_img_mock_profile),
-            contentDescription = null,
+        AsyncImage(
+            model = account.profilePictureUrl,
             contentScale = ContentScale.Crop,
+            contentDescription = null,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .clip(CircleShape)
                 .width(128.dp)
                 .aspectRatio(1f)
         )
+
         Text(
-            "Sophia Carter",
+            account.name,
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier
                 .padding(top = 16.dp)
         )
-        Text(
-            "Digital Creator",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
-        )
-        Text(
-            "Travel enthusiast | Sharing my adventures",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
-        )
+
+        account.biography?.let {
+            Text(
+                it,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+            )
+        }
 
         Row(
             modifier = Modifier
@@ -200,7 +225,9 @@ fun ProfileHeader() {
 }
 
 @Composable
-fun ProfileStats() {
+fun ProfileStats(
+    account: InstagramAccountUI
+) {
     val horizontalInsets = WindowInsets.safeDrawing
         .only(WindowInsetsSides.Horizontal)
         .asPaddingValues()
@@ -219,9 +246,9 @@ fun ProfileStats() {
         contentPadding = combined,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item { SmallProfileStat(title = "1.2M", description = "Posts") }
-        item { SmallProfileStat(title = "8.5k", description = "Followers") }
-        item { SmallProfileStat(title = "1.2k", description = "Following") }
+        item { SmallProfileStat(title = account.mediaCount.toInstagramString(), description = "Posts") }
+        item { SmallProfileStat(title = account.followers.toInstagramString(), description = "Followers") }
+        item { SmallProfileStat(title = account.follows.toInstagramString(), description = "Following") }
     }
 }
 
@@ -291,7 +318,9 @@ fun SmallProfileStat(
 internal fun ProfilePreview() {
     InstalyticsTheme {
         Scaffold { _ ->
-            Profile()
+            ProfileUI(
+                account = InstagramAccountUI()
+            )
         }
     }
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InstagramProfile(
+internal data class InstagramProfile(
     @SerialName("biography") val biography: String,
     @SerialName("followers_count") val followersCount: Int,
     @SerialName("follows_count") val followsCount: Int,
@@ -18,13 +18,13 @@ data class InstagramProfile(
 )
 
 @Serializable
-data class MediaContainer(
+internal data class MediaContainer(
     @SerialName("data") val data: List<MediaItem>,
     @SerialName("paging") val paging: Paging? = null
 )
 
 @Serializable
-data class MediaItem(
+internal data class MediaItem(
     @SerialName("id") val id: String,
     @SerialName("media_type") val mediaType: String,
     @SerialName("media_url") val mediaUrl: String,
@@ -33,13 +33,13 @@ data class MediaItem(
 )
 
 @Serializable
-data class Paging(
+internal data class Paging(
     @SerialName("cursors") val cursors: Cursors? = null,
     @SerialName("next") val next: String? = null
 )
 
 @Serializable
-data class Cursors(
+internal data class Cursors(
     @SerialName("before") val before: String? = null,
     @SerialName("after") val after: String? = null
 )

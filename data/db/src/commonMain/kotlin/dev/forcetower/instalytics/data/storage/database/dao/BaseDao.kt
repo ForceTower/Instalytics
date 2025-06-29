@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import androidx.room.Update
 
-abstract class BaseDao<T> {
+interface BaseDao<T> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(value: T): Long
 
@@ -29,10 +29,10 @@ abstract class BaseDao<T> {
     abstract suspend fun delete(values: List<T>)
 
     @Delete
-    abstract suspend fun delete(value: T)
+    suspend fun delete(value: T)
 
     @Transaction
-    open suspend fun insertOrUpdate(values: List<T>) {
+    suspend fun insertOrUpdate(values: List<T>) {
         val insertResult = insertAllIgnore(values)
         val updateList = mutableListOf<T>()
 

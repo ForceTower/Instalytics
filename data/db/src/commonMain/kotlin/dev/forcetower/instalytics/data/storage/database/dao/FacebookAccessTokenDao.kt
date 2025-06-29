@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import dev.forcetower.instalytics.data.model.entity.FacebookAccessToken
 
 @Dao
-abstract class FacebookAccessTokenDao : BaseDao<FacebookAccessToken>() {
+abstract class FacebookAccessTokenDao : BaseDao<FacebookAccessToken> {
     @Query("SELECT * FROM FacebookAccessToken LIMIT 1")
     abstract suspend fun requireCurrent(): FacebookAccessToken?
 

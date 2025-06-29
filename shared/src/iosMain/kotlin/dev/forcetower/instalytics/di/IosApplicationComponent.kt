@@ -1,12 +1,9 @@
 package dev.forcetower.instalytics.di
 
+import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.core.base.inject.ApplicationScope
-import dev.forcetower.kmm.toolkit.logdog.logdog
-import me.tatarka.inject.annotations.Component
 
-@Component
-@ApplicationScope
 abstract class IosApplicationComponent : SharedApplicationComponent {
-    init { logdog { "Initializing main component" } }
+    init { Logger.d { "Initializing main component" } }
     companion object
 }

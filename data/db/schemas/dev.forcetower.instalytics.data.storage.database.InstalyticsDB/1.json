@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6e452c7f0f13b1f55edf93ab130d56fc",
+    "identityHash": "7229174a5a21032c4c32bac13fb4f2b7",
     "entities": [
       {
         "tableName": "FacebookAccessToken",
@@ -36,7 +36,7 @@
       },
       {
         "tableName": "InstagramAccount",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `username` TEXT NOT NULL, `profilePictureUrl` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `username` TEXT NOT NULL, `profilePictureUrl` TEXT, `biography` TEXT, `followers` INTEGER NOT NULL, `follows` INTEGER NOT NULL, `mediaCount` INTEGER NOT NULL, `me` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -60,6 +60,35 @@
             "fieldPath": "profilePictureUrl",
             "columnName": "profilePictureUrl",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "biography",
+            "columnName": "biography",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "followers",
+            "columnName": "followers",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "follows",
+            "columnName": "follows",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mediaCount",
+            "columnName": "mediaCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "me",
+            "columnName": "me",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -72,7 +101,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e452c7f0f13b1f55edf93ab130d56fc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7229174a5a21032c4c32bac13fb4f2b7')"
     ]
   }
 }

@@ -7,6 +7,11 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.base)
+                implementation(projects.data.db)
+                implementation(projects.data.model)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.contentnegotiation)
+                implementation(libs.ktor.serialization.json)
             }
         }
     }

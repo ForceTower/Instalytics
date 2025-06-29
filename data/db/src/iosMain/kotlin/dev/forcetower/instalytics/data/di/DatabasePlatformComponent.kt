@@ -1,14 +1,7 @@
 package dev.forcetower.instalytics.data.di
 
-import dev.forcetower.instalytics.core.base.inject.ApplicationScope
-import dev.forcetower.instalytics.data.storage.database.DarwinInstalyticsDatabaseBuilderFactory
-import dev.forcetower.instalytics.data.storage.database.InstalyticsDatabaseBuilderFactory
-import me.tatarka.inject.annotations.Provides
+import dev.forcetower.instalytics.core.base.koin.CreatesKoinModule
 
-actual interface DatabasePlatformComponent {
-    @Provides
-    @ApplicationScope
-    fun provideDatabaseFactory(): InstalyticsDatabaseBuilderFactory {
-        return DarwinInstalyticsDatabaseBuilderFactory()
-    }
+actual object DatabasePlatformComponent : CreatesKoinModule {
+    override fun module() = IosDatabaseModule.module
 }

@@ -60,6 +60,7 @@ android {
 
 dependencies {
     implementation(projects.shared)
+    implementation(projects.domain)
     implementation(projects.android.shared.toolkit)
     implementation(libs.androidx.appcompat)
     implementation(libs.compose.ui)
@@ -75,6 +76,8 @@ dependencies {
     implementation(libs.coil.network.okhttp)
     implementation(libs.charts.compose)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
     debugImplementation(libs.compose.ui.tooling)
 }

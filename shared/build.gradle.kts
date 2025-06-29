@@ -21,11 +21,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.core.base)
-            api(projects.data.db)
-            api(projects.data.instagram.profile)
+            api(projects.domain)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
-            implementation(libs.kotlininject.runtime)
+//            implementation(libs.kotlininject.runtime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -38,12 +37,12 @@ android {
 }
 
 ksp {
-    arg("me.tatarka.inject.generateCompanionExtensions", "true")
+//    arg("me.tatarka.inject.generateCompanionExtensions", "true")
 }
 
 room {
     schemaDirectory("$projectDir/schemas")
 }
 
-addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
+//addKspDependencyForAllTargets(libs.kotlininject.compiler.ksp)
 addKspDependencyForAllTargets(libs.androidx.room.compiler)

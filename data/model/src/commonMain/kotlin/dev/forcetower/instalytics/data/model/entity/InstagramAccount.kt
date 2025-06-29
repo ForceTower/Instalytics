@@ -9,5 +9,10 @@ data class InstagramAccount(
     val id: String,
     val name: String,
     val username: String,
-    val profilePictureUrl: String?
+    val profilePictureUrl: String?,
+    val biography: String?,
+    val followers: Int,
+    val follows: Int,
+    val mediaCount: Int,
+    val me: Boolean
 )

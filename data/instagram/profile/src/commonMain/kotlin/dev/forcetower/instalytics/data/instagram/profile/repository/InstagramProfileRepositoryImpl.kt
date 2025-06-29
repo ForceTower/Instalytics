@@ -4,14 +4,18 @@ import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.data.instagram.profile.network.ProfileService
 import dev.forcetower.instalytics.data.model.entity.InstagramAccount
 import dev.forcetower.instalytics.data.storage.database.InstalyticsDB
-import me.tatarka.inject.annotations.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 
-@Inject
-class InstagramProfileRepositoryImpl internal constructor(
+internal class InstagramProfileRepositoryImpl(
     private val database: InstalyticsDB,
     private val service: ProfileService
 ) : InstagramProfileRepository {
-    override suspend fun me() {
+    override fun me(): Flow<InstagramAccount> {
+        return database.instagramAccount.me().filterNotNull()
+    }
+
+    override suspend fun fetchMe() {
         val accounts = service.accounts().data
         val business = accounts.firstNotNullOfOrNull { it.businessAccount }
         if (business == null) {
@@ -29,7 +33,12 @@ class InstagramProfileRepositoryImpl internal constructor(
                 instagram.id,
                 instagram.name,
                 instagram.username,
-                instagram.profilePictureUrl
+                instagram.profilePictureUrl,
+                instagram.biography,
+                instagram.followersCount,
+                instagram.followsCount,
+                instagram.mediaCount,
+                true
             )
         )
     }

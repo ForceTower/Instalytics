@@ -1,11 +1,9 @@
 package dev.forcetower.instalytics.di
 
-import dev.forcetower.instalytics.data.di.DatabaseComponent
-import dev.forcetower.instalytics.data.instagram.profile.di.InstagramProfileDataBinds
-import dev.forcetower.instalytics.data.storage.database.InstalyticsDB
+import dev.forcetower.instalytics.domain.di.DomainExternalModule
+import org.koin.core.module.Module
 
-internal interface SharedApplicationComponent :
-    DatabaseComponent,
-    InstagramProfileDataBinds {
-    val database: InstalyticsDB
+interface SharedApplicationComponent {
+    val modules: List<Module>
+        get() = DomainExternalModule.modules
 }

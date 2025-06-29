@@ -6,7 +6,7 @@ import de.jensklingenberg.ktorfit.http.Query
 import dev.forcetower.instalytics.data.instagram.profile.dto.AccountResponse
 import dev.forcetower.instalytics.data.instagram.profile.dto.InstagramProfile
 
-interface ProfileService {
+internal interface ProfileService {
     @GET("me/accounts")
     suspend fun accounts(
         @Query("fields") fields: String = "instagram_business_account"
