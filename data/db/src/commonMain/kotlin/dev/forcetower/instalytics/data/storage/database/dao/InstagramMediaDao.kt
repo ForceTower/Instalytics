@@ -12,12 +12,6 @@ import kotlinx.coroutines.flow.Flow
 interface InstagramMediaDao : BaseDao<InstagramMedia> {
     @Transaction
     @Query(
-        "SELECT * FROM InstagramMedia WHERE owner = (SELECT id FROM InstagramAccount WHERE me = 1 LIMIT 1)"
-    )
-    fun mine(): Flow<List<InstagramMediaWithChildren>>
-
-    @Transaction
-    @Query(
         "SELECT * FROM InstagramMedia WHERE owner = (SELECT id FROM InstagramAccount WHERE me = 1 LIMIT 1) ORDER BY timestamp DESC"
     )
     fun minePaged(): PagingSource<Int, InstagramMediaWithChildren>

@@ -13,11 +13,8 @@ class FetchConnectedUserProfileUseCase(private val repository: InstagramProfileR
     val me: Flow<InstagramAccountUI>
         get() = repository.me().map { it.toDomain() }
 
-    val posts: Flow<List<InstagramPostUI>>
-        get() = repository.posts().map { value -> value.map { it.toDomain() } }
-
     val post: Flow<PagingData<InstagramPostUI>>
-        get() = repository.post().map { value -> value.map { el -> el.media.toDomain() } }
+        get() = repository.posts().map { value -> value.map { el -> el.media.toDomain() } }
 
     @Throws(exceptionClasses = [IllegalStateException::class])
     suspend fun fetchMe() = repository.fetchMe()

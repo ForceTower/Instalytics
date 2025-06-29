@@ -7,12 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataEvent
 import androidx.paging.PagingDataPresenter
 import androidx.paging.cachedIn
-import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.domain.model.InstagramPostUI
 import dev.forcetower.instalytics.domain.usecase.FetchConnectedUserProfileUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -38,7 +36,6 @@ open class ProfilePostsViewModel: ViewModel(), KoinComponent {
             postsFlow.collectLatest {
                 postsPagingDataPresenter.collectFrom(it)
             }
-            Logger.d { "stopped observing? maybe" }
         }
     }
 
