@@ -33,7 +33,7 @@ let images = [
 ]
 
 struct ProfileView: View {
-    @ObservedObject var vm: ProfileViewModel = .init()
+    @StateObject private var vm: ProfileViewModel = .init()
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -42,9 +42,9 @@ struct ProfileView: View {
                 Spacer(minLength: 8)
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 1), count: 3), spacing: 1) {
                     ForEach(vm.photos.indices, id: \.self) { index in
-                        if let item = vm.getElement(index: Int32(index)) {
-                            let string = item.imageUrl
-                            GeometryReader { geometry in
+                        GeometryReader { geometry in
+                            if let item = vm.getElement(index: Int32(index)) {
+                                let string = item.imageUrl
                                 let size = geometry.size.width
                                 WebImage(url: URL(string: string)) { image in
                                     image
@@ -57,8 +57,8 @@ struct ProfileView: View {
                                     Rectangle().foregroundColor(.gray)
                                 }
                             }
-                            .aspectRatio(1, contentMode: .fit)
                         }
+                        .aspectRatio(1, contentMode: .fit)
                     }
                 }
             }

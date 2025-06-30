@@ -1,6 +1,5 @@
 package dev.forcetower.instalytics.data.instagram.network.di
 
-import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.data.instagram.network.cache.CacheModule
 import dev.forcetower.instalytics.data.instagram.network.cache.FileSystemProvider
 import dev.forcetower.instalytics.data.instagram.network.cache.InternalCacheStorage
@@ -33,7 +32,7 @@ object NetworkModule {
                 install(Logging) {
                     logger = object : KtorLogger {
                         override fun log(message: String) {
-                            Logger.d { message }
+//                            Logger.d { message }
                         }
                     }
                     level = LogLevel.ALL

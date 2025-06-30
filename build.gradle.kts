@@ -14,4 +14,5 @@ plugins {
     alias(libs.plugins.cacheFixPlugin) apply false
     alias(libs.plugins.ktorfit) apply false
     alias(libs.plugins.touchlab.skie) apply false
+    alias(libs.plugins.nativeCoroutines) apply false
 }

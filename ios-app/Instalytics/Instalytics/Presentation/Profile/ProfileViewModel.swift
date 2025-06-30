@@ -13,6 +13,7 @@ class ProfileViewModel: InstalyticsKit.ProfilePostsViewModel, ObservableObject {
     
     @Published private(set) var account: InstagramAccountUI? = nil
     @Published private(set) var photos: [Any] = []
+    private(set) var meme: Paging_commonPagingData<InstagramPostUI>? = nil
     
     init(fetchProfileUseCase: FetchConnectedUserProfileUseCase = ApplicationComponents.shared.fetchConnectedUserProfile) {
         self.fetchProfileUseCase = fetchProfileUseCase

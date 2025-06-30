@@ -116,3 +116,4 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 cacheFixPlugin = { id = "org.gradle.android.cache-fix", version = "3.0.1" }
 ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 touchlab-skie = { id = "co.touchlab.skie", version.ref = "skie" }
+nativeCoroutines = { id = "com.rickclephas.kmp.nativecoroutines", version = "1.0.0-ALPHA-44" }

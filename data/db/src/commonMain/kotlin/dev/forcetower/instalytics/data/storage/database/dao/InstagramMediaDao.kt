@@ -6,7 +6,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import dev.forcetower.instalytics.data.model.composite.InstagramMediaWithChildren
 import dev.forcetower.instalytics.data.model.entity.InstagramMedia
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface InstagramMediaDao : BaseDao<InstagramMedia> {

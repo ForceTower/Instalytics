@@ -37,8 +37,12 @@ internal class PostsMediatorSource(
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
 
-                database.instagramCursor.query(lastItem.media.id, "MEDIA", profileId)?.after
-                    ?: return MediatorResult.Success(endOfPaginationReached = true)
+                val after = database.instagramCursor.query(
+                    lastItem.media.id,
+                    "MEDIA",
+                    profileId
+                )?.after
+                after ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
         }
 

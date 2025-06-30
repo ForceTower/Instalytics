@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.touchlab.skie)
+//    alias(libs.plugins.nativeCoroutines)
 }
 
 kotlin {
@@ -33,7 +34,6 @@ kotlin {
             implementation(libs.kotlin.test)
         }
         iosMain.dependencies {
-
         }
     }
 
