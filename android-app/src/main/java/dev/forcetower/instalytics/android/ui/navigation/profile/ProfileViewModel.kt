@@ -12,7 +12,7 @@ class ProfileViewModel(
     private val profile: FetchConnectedUserProfileUseCase
 ) : ViewModel() {
     val me = profile.me
-    val post = profile.post.cachedIn(viewModelScope)
+    val posts = profile.post.cachedIn(viewModelScope)
 
     fun fetchProfile() {
         viewModelScope.launch {

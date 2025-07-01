@@ -1,6 +1,5 @@
 package dev.forcetower.instalytics.android.ui.navigation.profile
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,7 +37,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -54,7 +52,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
@@ -62,7 +59,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import dev.forcetower.instalytics.android.R
-import dev.forcetower.instalytics.android.ui.theme.InstalyticsTheme
 import dev.forcetower.instalytics.di.toInstagramString
 import dev.forcetower.instalytics.domain.model.InstagramAccountUI
 import dev.forcetower.instalytics.domain.model.InstagramPostUI
@@ -87,7 +83,7 @@ fun Profile(
         paddingValues,
         account,
         posts = {
-            viewModel.post.collectAsLazyPagingItems()
+            viewModel.posts.collectAsLazyPagingItems()
         },
         onPostClicked = { post ->
             viewModel.onPostClicked(post)
