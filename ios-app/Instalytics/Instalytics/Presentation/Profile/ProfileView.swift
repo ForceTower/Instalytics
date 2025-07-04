@@ -21,9 +21,8 @@ struct ProfileView: View {
                     ForEach(vm.photos.indices, id: \.self) { index in
                         GeometryReader { geometry in
                             if let item = vm.getElement(index: Int32(index)) {
-                                let string = item.imageUrl
                                 let size = geometry.size.width
-                                WebImage(url: URL(string: string)) { image in
+                                WebImage(url: URL(string: item.imageUrl)) { image in
                                     image
                                         .resizable()
                                         .scaledToFill()

@@ -12,14 +12,14 @@ struct RootView: View {
     
     var body: some View {
         switch router.state {
-            case .initializing:
-            Text("Initializing...")
+        case .initializing:
+            BootView()
         case .login:
             AuthRootView()
         case .connected:
             HomeView()
         case .facebook:
-            Text("Facebook login not implemented yet")
+            LinkFacebookAccountView()
         }
     }
 }

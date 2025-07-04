@@ -12,5 +12,5 @@ enum RootState : Hashable {
 }
 
 class RootRouter : ObservableObject {
-    @Published var state: RootState = .connected
+    @Published var state: RootState = .initializing
 }
