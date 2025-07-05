@@ -39,6 +39,7 @@
 		6C21A7872E1895B5003F4155 /* Exceptions for "Instalytics" folder in "Instalytics" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Config.xcconfig,
 				Info.plist,
 			);
 			target = 6CEDA0D02DB1F71300E8A665 /* Instalytics */;
@@ -197,7 +198,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					6CEDA0D02DB1F71300E8A665 = {
 						CreatedOnToolsVersion = 16.3;
