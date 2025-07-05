@@ -7,6 +7,7 @@
 
 import SwiftUI
 import InstalyticsKit
+import FacebookCore
 
 @main
 struct InstalyticsApp: App {
@@ -17,6 +18,12 @@ struct InstalyticsApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(router)
+                .onOpenURL { url in
+                    ApplicationDelegate.shared.application(UIApplication.shared,
+                                                           open: url,
+                                                           sourceApplication: nil,
+                                                           annotation: UIApplication.OpenURLOptionsKey.annotation)
+                }
         }
     }
 }

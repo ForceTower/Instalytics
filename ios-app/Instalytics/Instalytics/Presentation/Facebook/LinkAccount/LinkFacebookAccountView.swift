@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import FacebookLogin
 
 struct LinkFacebookAccountView: View {
+    @EnvironmentObject var router: RootRouter
     @StateObject var vm: LinkFacebookAccountViewModel = .init()
     
     var body: some View {
@@ -36,6 +38,7 @@ struct LinkFacebookAccountView: View {
             } else {
                 Button {
                     vm.isLoading = true
+                    vm.facebookLogin()
                 } label: {
                     Text("Link to Facebook")
                 }
@@ -48,6 +51,9 @@ struct LinkFacebookAccountView: View {
                 .multilineTextAlignment(.center)
                 .font(.footnote)
                 .padding(.horizontal)
+        }
+        .onAppear {
+            vm.router = router
         }
     }
 }

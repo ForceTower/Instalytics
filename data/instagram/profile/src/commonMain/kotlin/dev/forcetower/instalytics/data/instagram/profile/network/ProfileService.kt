@@ -12,7 +12,8 @@ import dev.forcetower.instalytics.data.instagram.profile.dto.MediaItem
 internal interface ProfileService {
     @GET("me/accounts")
     suspend fun accounts(
-        @Query("fields") fields: String = "instagram_business_account"
+        @Query("fields") fields: String = "instagram_business_account",
+        @Query("access_token") token: String? = null
     ): AccountResponse
 
     @GET("{id}")

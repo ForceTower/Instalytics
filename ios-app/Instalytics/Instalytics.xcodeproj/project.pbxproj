@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6C21A6E02E0754CB003F4155 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6C21A6DF2E0754CB003F4155 /* SDWebImageSwiftUI */; };
+		6C21A78B2E1897DC003F4155 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6C21A78A2E1897DC003F4155 /* FacebookCore */; };
+		6C21A78D2E1897DC003F4155 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 6C21A78C2E1897DC003F4155 /* FacebookLogin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C21A6E02E0754CB003F4155 /* SDWebImageSwiftUI in Frameworks */,
+				6C21A78B2E1897DC003F4155 /* FacebookCore in Frameworks */,
+				6C21A78D2E1897DC003F4155 /* FacebookLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +136,8 @@
 			name = Instalytics;
 			packageProductDependencies = (
 				6C21A6DF2E0754CB003F4155 /* SDWebImageSwiftUI */,
+				6C21A78A2E1897DC003F4155 /* FacebookCore */,
+				6C21A78C2E1897DC003F4155 /* FacebookLogin */,
 			);
 			productName = Instalytics;
 			productReference = 6CEDA0D12DB1F71300E8A665 /* Instalytics.app */;
@@ -217,6 +223,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6C21A6DE2E0754CB003F4155 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				6C21A7892E1897DC003F4155 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6CEDA0D22DB1F71300E8A665 /* Products */;
@@ -448,8 +455,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Instalytics/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -481,8 +488,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Instalytics/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -623,6 +630,14 @@
 				minimumVersion = 3.1.3;
 			};
 		};
+		6C21A7892E1897DC003F4155 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -630,6 +645,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C21A6DE2E0754CB003F4155 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		6C21A78A2E1897DC003F4155 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C21A7892E1897DC003F4155 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		6C21A78C2E1897DC003F4155 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C21A7892E1897DC003F4155 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -11,4 +11,5 @@ interface InstagramProfileRepository {
     fun posts(): Flow<PagingData<InstagramMediaWithChildren>>
 
     suspend fun fetchMe()
+    suspend fun setupToken(token: String): Boolean
 }

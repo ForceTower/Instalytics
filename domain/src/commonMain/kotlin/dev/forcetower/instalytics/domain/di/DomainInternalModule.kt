@@ -1,5 +1,6 @@
 package dev.forcetower.instalytics.domain.di
 
+import dev.forcetower.instalytics.domain.usecase.CheckFacebookLoginTokenUseCase
 import dev.forcetower.instalytics.domain.usecase.FetchConnectedUserProfileUseCase
 import dev.forcetower.instalytics.domain.usecase.GetInitialRouteUseCase
 import org.koin.dsl.module
@@ -12,6 +13,10 @@ internal object DomainInternalModule {
 
         factory {
             GetInitialRouteUseCase(get())
+        }
+
+        factory {
+            CheckFacebookLoginTokenUseCase(get())
         }
     }
 

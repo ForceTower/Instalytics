@@ -1,5 +1,6 @@
 package dev.forcetower.instalytics.data.instagram.network.di
 
+import co.touchlab.kermit.Logger
 import dev.forcetower.instalytics.data.instagram.network.cache.CacheModule
 import dev.forcetower.instalytics.data.instagram.network.cache.FileSystemProvider
 import dev.forcetower.instalytics.data.instagram.network.cache.InternalCacheStorage
@@ -50,6 +51,11 @@ object NetworkModule {
             val database = get<InstalyticsDB>()
 
             ktorClient.plugin(HttpSend).intercept { request ->
+                if (request.url.parameters["access_token"] != null) {
+                    Logger.v { "Skipping network token check" }
+                    return@intercept execute(request)
+                }
+
                 val token = database.facebookAccessToken.requireCurrent()
                 if (token == null) {
                     throw IllegalStateException("not connected :(")
