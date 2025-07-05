@@ -15,8 +15,8 @@ struct ProfileView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
-                ProfileHeader(account: vm.account)
-                Spacer(minLength: 8)
+                ProfileHeader(account: vm.account, photo: vm.photos.count > 0 ? vm.getElement(index: 0)?.imageUrl : nil)
+                Spacer(minLength: 16)
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 1), count: 3), spacing: 1) {
                     ForEach(vm.photos.indices, id: \.self) { index in
                         GeometryReader { geometry in
@@ -49,28 +49,59 @@ struct ProfileView: View {
 
 struct ProfileHeader: View {
     let account: InstagramAccountUI?
+    let photo: String?
     
     var body: some View {
         VStack(alignment: .leading) {
-            WebImage(url: URL(string: account?.profilePictureUrl ?? "")) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-            } placeholder: {
-                Rectangle().foregroundColor(.gray)
+            HStack {
+                Spacer()
+                
+                VStack {
+                    Text(account?.follows.toInstagramString() ?? "...")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                    
+                    Text("Following")
+                        .font(.subheadline)
+                }
+                
+                Spacer()
+                
+                WebImage(url: URL(string: account?.profilePictureUrl ?? "")) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    Rectangle().foregroundColor(.gray)
+                }
+                .indicator(.activity)
+                .transition(.fade(duration: 0.5))
+                .frame(width: 128, height: 128)
+                .clipShape(.circle)
+                
+                Spacer()
+                
+                VStack {
+                    Text(account?.followers.toInstagramString() ?? "...")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                    
+                    Text("Followers")
+                        .font(.subheadline)
+                }
+                
+                Spacer()
             }
-            .indicator(.activity)
-            .transition(.fade(duration: 0.5))
-            .frame(width: 128, height: 128)
-            .clipShape(.circle)
-            .padding(.trailing, 8)
             
             Text(account?.name ?? "...")
-                .font(.title2)
+                .font(.title3)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity)
             
             Text(account?.biography ?? "...")
-                .font(.body)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity)
             
             HStack {
                 Button {
@@ -87,15 +118,36 @@ struct ProfileHeader: View {
                 }
                 .buttonStyle(.borderedProminent)
             }
-            
-            HStack {
-                SmallProfileStat(text: account?.mediaCount.toInstagramString() ?? "", description: "Posts")
-                SmallProfileStat(text: account?.follows.toInstagramString() ?? "", description: "Following")
-                SmallProfileStat(text: account?.followers.toInstagramString() ?? "", description: "Followers")
-            }
+            .frame(maxWidth: .infinity)
+            .padding(.top)
         }
-        .padding(.horizontal)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            GeometryReader { geometry in
+                Rectangle()
+                    .foregroundStyle(
+                        LinearGradient(colors: [Color(UIColor.systemBackground).opacity(1), Color(UIColor.systemBackground).opacity(0.5), Color(UIColor.systemBackground).opacity(1)],
+                                       startPoint: .top,
+                                       endPoint: .bottom)
+                    )
+                    .background {
+                        if let photo = photo {
+                            WebImage(url: URL(string: photo)) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .scaledToFill()
+                            } placeholder: {
+                                Rectangle().foregroundColor(.clear)
+                            }
+                            .transition(.fade(duration: 0.5))
+                            .blur(radius: 8)
+                        }
+                    }
+            }
+            .clipped()
+            
+        }
     }
 }
 
