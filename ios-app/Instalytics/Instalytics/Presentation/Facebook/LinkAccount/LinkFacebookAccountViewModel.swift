@@ -69,10 +69,10 @@ class LinkFacebookAccountViewModel : ObservableObject {
     
     private func checkProfile(token: String) async {
         do {
-            print("using \(token)")
             let result = try await checkFacebookLogin.checkTokenUsable(token: token)
             handleProfileUsableResult(result.boolValue)
         } catch {
+            manager.logOut()
             onFailedToLogin(with: error)
         }
     }
@@ -83,6 +83,7 @@ class LinkFacebookAccountViewModel : ObservableObject {
             print("Profile is usable. Move to connected.")
             self.router?.state = .connected
         } else {
+            manager.logOut()
             print("Profile is not usable. Teach.")
         }
     }
