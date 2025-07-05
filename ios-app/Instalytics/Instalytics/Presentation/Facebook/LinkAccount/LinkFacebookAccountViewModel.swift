@@ -6,11 +6,11 @@
 //
 
 import Combine
-import InstalyticsKit
+@preconcurrency import InstalyticsKit
 import FacebookLogin
 import FacebookCore
 
-extension CheckFacebookLoginTokenUseCase: @unchecked @retroactive Sendable {}
+//extension CheckFacebookLoginTokenUseCase: @unchecked @retroactive Sendable {}
 
 @MainActor
 class LinkFacebookAccountViewModel : ObservableObject {

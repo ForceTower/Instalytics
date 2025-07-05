@@ -5,9 +5,10 @@
 //  Created by João Paulo Santos Sena on 29/06/25.
 //
 
-import InstalyticsKit
+@preconcurrency import InstalyticsKit
 import Combine
 
+@MainActor
 class ProfileViewModel: InstalyticsKit.ProfilePostsViewModel, ObservableObject {
     private let fetchProfileUseCase: FetchConnectedUserProfileUseCase
     

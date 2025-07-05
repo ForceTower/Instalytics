@@ -5,9 +5,10 @@
 //  Created by João Paulo Santos Sena on 04/07/25.
 //
 
-import InstalyticsKit
+@preconcurrency import InstalyticsKit
 import Combine
 
+@MainActor
 class BootViewModel : InstalyticsKit.AppBootViewModel, ObservableObject {
     private let initialRouteUseCase: GetInitialRouteUseCase
     var router: RootRouter? = nil
@@ -18,7 +19,6 @@ class BootViewModel : InstalyticsKit.AppBootViewModel, ObservableObject {
         super.init(getInitialRouteUseCase: initialRouteUseCase)
     }
     
-    @MainActor
     func boot() {
         Task { await start() }
     }
@@ -26,13 +26,12 @@ class BootViewModel : InstalyticsKit.AppBootViewModel, ObservableObject {
     private func start() async {
         do {
             let initialRoute = try await initial()
-            await onInitialRoute(initialRoute)
+            onInitialRoute(initialRoute)
         } catch {
             print("Error fetching initial route: \(error)")
         }
     }
     
-    @MainActor
     private func onInitialRoute(_ initialRoute: AppInitialRoute) {
         switch initialRoute {
         case .auth:
