@@ -14,7 +14,7 @@
 	<key>FacebookAppID</key>
 	<string>1081841330632270</string>
 	<key>FacebookClientToken</key>
-	<string>76662a3fa9b37eebe73db92ece242d99</string>
+	<string>$(FACEBOOK_CLIENT_TOKEN)</string>
 	<key>FacebookDisplayName</key>
 	<string>Instalytics</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -26,11 +26,11 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <false/>
-	<key>FacebookAutoLogAppEventsEnabled</key>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<false/>
-    <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

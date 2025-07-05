@@ -9,3 +9,5 @@ captures
 local.properties
 xcuserdata
 .kotlin
+
+/ios-app/Instalytics/Instalytics/Config.xcconfig
